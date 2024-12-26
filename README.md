@@ -1,2 +1,2 @@
 # Devgram
-A dedicated social networking iOS app for developers
+A social networking iOS app designed dedicatedly for developers.
