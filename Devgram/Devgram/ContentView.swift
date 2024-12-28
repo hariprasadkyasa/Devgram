@@ -21,9 +21,7 @@ struct ContentView: View {
             }
         }
         .padding()
-        .onAppear{
-            viewModel.loadPosts()
-        }
+        
     }
 }
 

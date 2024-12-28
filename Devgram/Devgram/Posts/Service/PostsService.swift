@@ -8,6 +8,6 @@
 import Foundation
 
 protocol PostsService {
-    func getPosts(quantity : Int, offset:Int, completion:@escaping ([Post], Error?) -> Void)
+    func getPosts(quantity : Int, offset:Int) async -> [Post]
 }
 
