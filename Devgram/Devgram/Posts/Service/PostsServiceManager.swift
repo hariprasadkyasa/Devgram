@@ -26,5 +26,19 @@ class PostsServiceManager {
         ]
     }
     
+    func createPost(post: Post) async throws -> Bool{
+        let postData = try JSONEncoder().encode(post)
+        let postURLString = "https://api.backendless.com/6B25F667-D0B4-473E-8CE4-F2A39D3A4C72/AAB0A915-C295-4E0C-BF5C-023AC97B6C3B/data/Posts"
+        guard let postURL = URL(string: postURLString) else {return false}
+        var request = URLRequest(url: postURL)
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+        let (_, response) = try await URLSession.shared.data(for: request)
+        let httpResponse = response as? HTTPURLResponse
+        guard (httpResponse)?.statusCode == 200 else {return false}
+        return true
+    }
+    
     
 }
