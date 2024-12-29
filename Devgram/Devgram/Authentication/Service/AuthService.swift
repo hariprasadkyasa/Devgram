@@ -34,18 +34,18 @@ class AuthService {
         return newUser
     }
     
-    func loginUser(username: String = "hariprasad", password: String = "hariprasad") async throws -> User?{
+    func loginUser(username: String, password: String) async throws -> User?{
         let urlString = "https://eminentnose-us.backendless.app/api/users/login"
         let url = URL(string: urlString)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let payload: [String: Any] = ["login": username, "password": password]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: payload, options: [])
+        let payload: [String: String] = ["login": username, "password": password]
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload, options: [])
         let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse else {return nil}
-        guard httpResponse.statusCode == 200 else {return nil}
+        guard let httpResponse = response as? HTTPURLResponse else {throw AuthError.invalidResponse}
+        guard httpResponse.statusCode == 200 else {throw AuthError.invalidResponseCode(httpResponse.statusCode)}
         let user = try JSONDecoder().decode(User.self, from: data)
         //save auth token fpr further use
         if let token = user.token{

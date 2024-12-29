@@ -17,7 +17,7 @@ class LoginViewModel : ObservableObject {
     @MainActor
     func login() async{
         do{
-            if let user = try await authService.loginUser(username: "", password: ""){
+            if (try await authService.loginUser(username: username, password: password)) != nil{
                 userAuthenticated = true
             }
             
