@@ -16,7 +16,7 @@ public struct MainTabView: View {
                 .tabItem {
                     Image(systemName: "house")
                 }
-            Text("New Post")
+            CreatePostView()
                 .tabItem {
                     Image(systemName: "plus.square.fill")
                 }
