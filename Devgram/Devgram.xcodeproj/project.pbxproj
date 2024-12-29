@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		115CE5FD2D1E099000ED678D /* Notes in Sources */ = {isa = PBXBuildFile; fileRef = 115CE5FC2D1E098C00ED678D /* Notes */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		115CE5BB2D1DFBB500ED678D /* Devgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		115CE5FC2D1E098C00ED678D /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		115CE5B22D1DFBB500ED678D = {
 			isa = PBXGroup;
 			children = (
+				115CE5FC2D1E098C00ED678D /* Notes */,
 				115CE5BD2D1DFBB500ED678D /* Devgram */,
 				115CE5BC2D1DFBB500ED678D /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				115CE5FD2D1E099000ED678D /* Notes in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

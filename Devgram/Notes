@@ -1,0 +1,10 @@
+//
+//  Notes.swift
+//  Devgram
+//
+//  Created by Raghavendra Hariprasad Kyasa on 27/12/24.
+//
+
+- Improve 'Post' properties with coding keys.
+- Add splash screen and assets like app logo
+- Manage proper dependency injection
