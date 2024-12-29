@@ -6,3 +6,5 @@
 //
 
 - Improve 'Post' properties with coding keys.
+- Add splash screen and assets like app logo
+- Manage proper dependency injection

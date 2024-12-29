@@ -8,19 +8,14 @@
 import Foundation
 class PostsViewModel: ObservableObject{
     private let postsService = PostsServiceManager()
-    
-    init(){
-        Task {
-            try await loadPosts()
-        }
-    }
-    
+    @Published var posts : [Post] = [Post]()
+    @MainActor
     func loadPosts() async throws{
         do{
             let posts = try await postsService.getPosts()
             if posts.count > 0{
                 //display posts
-                print("The posts are: ", posts)
+                self.posts = posts
             }
         } catch {
             print("error fetching posts: ",error.localizedDescription)
