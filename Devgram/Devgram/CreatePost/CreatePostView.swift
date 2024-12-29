@@ -36,6 +36,7 @@ struct CreatePostView: View {
             }
             
         }
+        .padding()
         
         
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject var loginViewModel = LoginViewModel()
+    @State var displaySignUpView : Bool = false
     var body: some View {
         NavigationStack {
             VStack{
@@ -31,10 +32,14 @@ struct LoginView: View {
                                 .padding()
                                 .background(Color(UIColor.systemGray6))
                                 .cornerRadius(10)
-                
+                Spacer()
+                    .frame(height: 20)
                 Button {
                     //just navigate to home view for now
-                    loginViewModel.userAuthenticated = true
+                    Task{
+                        await loginViewModel.login()
+                    }
+                    
                 } label: {
                     Text("Login")
                         .font(.headline)
@@ -45,10 +50,32 @@ struct LoginView: View {
                         .cornerRadius(10)
                         .disabled(loginViewModel.username.isEmpty && loginViewModel.password.isEmpty)
                 }
+                
+                HStack{
+                    Text("New user?")
+                        .foregroundColor(.gray)
+                        .font(.subheadline)
+                    Button {
+                        //display signup view in a sheet
+                        displaySignUpView = true
+                    } label: {
+                        Text("Signup")
+                            .font(.subheadline)
+                            .foregroundColor(.blue)
+                            
+                            
+                    }
+                }
+                
+                
             }
+            .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $loginViewModel.userAuthenticated) {
                 MainTabView()
+            }
+            .sheet(isPresented: $displaySignUpView) {
+                SignupView(isPresented: $displaySignUpView, userAuthenticated: $loginViewModel.userAuthenticated)
             }
             
             
