@@ -31,15 +31,15 @@ struct SignupView: View {
                 .padding()
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
-                
+            
             SecureField("Password", text: $signupViewModel.password)
-                            .padding()
-                            .background(Color(UIColor.systemGray6))
-                            .cornerRadius(10)
+                .padding()
+                .background(Color(UIColor.systemGray6))
+                .cornerRadius(10)
             SecureField("Confirm password", text: $signupViewModel.confirmPassword)
-                            .padding()
-                            .background(Color(UIColor.systemGray6))
-                            .cornerRadius(10)
+                .padding()
+                .background(Color(UIColor.systemGray6))
+                .cornerRadius(10)
             Spacer()
                 .frame(height: 30)
             Button {
@@ -65,12 +65,12 @@ struct SignupView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(10)
-                    .disabled(
-                        signupViewModel.username.isEmpty ||
-                        signupViewModel.email.isEmpty ||
-                        signupViewModel.password.isEmpty || signupViewModel.confirmPassword.isEmpty
-                    )
-            }
+                
+            }.disabled(
+                signupViewModel.username.isEmpty ||
+                signupViewModel.email.isEmpty ||
+                signupViewModel.password.isEmpty || signupViewModel.confirmPassword.isEmpty
+            )
         }.padding()
     }
 }

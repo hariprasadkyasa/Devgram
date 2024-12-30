@@ -13,5 +13,8 @@ enum Constants {
         static let urlScheme = "https"
     }
     
+    enum Keys {
+        static let userTokenKey = "authToken"
+    }
     
 }

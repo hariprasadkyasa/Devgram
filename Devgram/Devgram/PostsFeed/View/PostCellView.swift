@@ -27,5 +27,5 @@ struct PostCellView: View {
 }
 
 #Preview {
-    PostCellView(post: Post(postid: 1, content: "Sample post", user_name: "Hari"))
+    PostCellView(post: Post(postid: 1, content: "Sample post", user_name: "Hari" ))
 }
