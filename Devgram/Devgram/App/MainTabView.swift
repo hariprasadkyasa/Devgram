@@ -20,7 +20,7 @@ public struct MainTabView: View {
                 .tabItem {
                     Image(systemName: "plus.square.fill")
                 }
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person.crop.square")
                 }

@@ -19,54 +19,58 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
                 
-                // Email Field
-                TextField("Email", text: $loginViewModel.username)
-                    .keyboardType(.emailAddress)
-                    .textContentType(.emailAddress)
-                    .autocapitalization(.none)
-                    .padding()
-                    .background(Color(UIColor.systemGray6))
-                    .cornerRadius(10)
-                    
-                SecureField("Password", text: $loginViewModel.password)
-                                .padding()
-                                .background(Color(UIColor.systemGray6))
-                                .cornerRadius(10)
-                Spacer()
-                    .frame(height: 20)
-                Button {
-                    //just navigate to home view for now
-                    Task{
-                        await loginViewModel.login()
-                    }
-                    
-                } label: {
-                    Text("Login")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                if loginViewModel.gettingUserAuthenticationStatus {
+                    ProgressView()
+                }else{
+                    // Email Field
+                    TextField("Email", text: $loginViewModel.username)
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
+                        .autocapitalization(.none)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(Color(UIColor.systemGray6))
                         .cornerRadius(10)
-                        .disabled(loginViewModel.username.isEmpty && loginViewModel.password.isEmpty)
-                }
-                
-                HStack{
-                    Text("New user?")
-                        .foregroundColor(.gray)
-                        .font(.subheadline)
+                        
+                    SecureField("Password", text: $loginViewModel.password)
+                                    .padding()
+                                    .background(Color(UIColor.systemGray6))
+                                    .cornerRadius(10)
+                    Spacer()
+                        .frame(height: 20)
                     Button {
-                        //display signup view in a sheet
-                        displaySignUpView = true
+                        //just navigate to home view for now
+                        Task{
+                            await loginViewModel.login()
+                        }
+                        
                     } label: {
-                        Text("Signup")
+                        Text("Login")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                            .disabled(loginViewModel.username.isEmpty && loginViewModel.password.isEmpty)
+                    }
+                    
+                    HStack{
+                        Text("New user?")
+                            .foregroundColor(.gray)
                             .font(.subheadline)
-                            .foregroundColor(.blue)
-                            
-                            
+                        Button {
+                            //display signup view in a sheet
+                            displaySignUpView = true
+                        } label: {
+                            Text("Signup")
+                                .font(.subheadline)
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
-                
+            }
+            .onAppear {
+                Task { await loginViewModel.checkIfUserAuthenticated() }
                 
             }
             .padding()
@@ -77,6 +81,7 @@ struct LoginView: View {
             .sheet(isPresented: $displaySignUpView) {
                 SignupView(isPresented: $displaySignUpView, userAuthenticated: $loginViewModel.userAuthenticated)
             }
+            
             
             
         }

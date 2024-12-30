@@ -13,7 +13,7 @@ class SignupViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
-    private let authService: AuthService = AuthService()
+    private let authService: AuthenticationServiceManager = AuthenticationServiceManager()
     @MainActor
     func signup() async -> User?{
         guard !username.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !email.isEmpty && password == confirmPassword else {

@@ -11,7 +11,8 @@ class LoginViewModel : ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var userAuthenticated = false
-    private var authService = AuthService()
+    @Published var gettingUserAuthenticationStatus = false
+    private var authService = AuthenticationServiceManager()
     
     
     @MainActor
@@ -26,5 +27,19 @@ class LoginViewModel : ObservableObject {
             print("The error while login:", error.localizedDescription)
         }
         
+    }
+    
+    @MainActor
+    func checkIfUserAuthenticated() async{
+        do{
+            gettingUserAuthenticationStatus = true
+            userAuthenticated = try await authService.isUserSessionValid()
+            print("The authentication status: \(userAuthenticated)")
+        }
+        catch
+        {
+            print("The error while login:", error.localizedDescription)
+        }
+        gettingUserAuthenticationStatus = false
     }
 }
