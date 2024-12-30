@@ -16,6 +16,7 @@ class PostsViewModel: ObservableObject{
             if posts.count > 0{
                 //display posts
                 self.posts = posts
+                print("The posts from the server are: \(posts)")
             }
         } catch {
             print("error fetching posts: ",error.localizedDescription)

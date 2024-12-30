@@ -32,8 +32,7 @@ struct CreatePostView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(10)
-                    .disabled(createPostViewModel.postContent.isEmpty)
-            }
+            }.disabled(createPostViewModel.postContent.isEmpty)
             
         }
         .padding()

@@ -14,7 +14,8 @@ struct PostsView : View {
         VStack{
             ScrollView{
                 LazyVStack(spacing: 30){
-                    ForEach(postsViewModel.posts, id:\.postid){ post in
+                    ForEach(0..<postsViewModel.posts.count, id: \.self){ index in
+                        let post = postsViewModel.posts[index]
                         PostCellView(post: post)
                     }
                 }

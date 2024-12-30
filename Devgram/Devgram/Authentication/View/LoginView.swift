@@ -51,8 +51,8 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.blue)
                             .cornerRadius(10)
-                            .disabled(loginViewModel.username.isEmpty && loginViewModel.password.isEmpty)
-                    }
+                            
+                    }.disabled(loginViewModel.username.isEmpty || loginViewModel.password.isEmpty)
                     
                     HStack{
                         Text("New user?")
