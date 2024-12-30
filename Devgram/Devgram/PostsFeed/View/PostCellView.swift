@@ -10,22 +10,32 @@ import SwiftUI
 struct PostCellView: View {
     var post : Post
     var body: some View {
-        VStack(alignment: .leading, spacing: 10){
+        VStack(alignment: .leading){
             HStack{
                 Image(systemName: "person.crop.circle")
-                Text(post.user_name)
-            }.padding(.leading)
+                Text(post.username)
+                    .fontWeight(.semibold)
+            }.padding(.horizontal)
             
             VStack{
-                //Text(post.content)
-                CodeBlockView(code: post.content)
+                switch post.posttype{
+                case PostType.text.rawValue:
+                    PostTextView(text: post.content)
+                case PostType.code.rawValue:
+                    CodeBlockView(code: post.content)
+                case PostType.link.rawValue:
+                    PostLinkView(linkText: post.content)
+                default:
+                    PostTextView(text: post.content)
+                }
             }
-            .frame(width: UIScreen.main.bounds.width, height:200)
+            
         }
+        
         
     }
 }
 
 #Preview {
-    PostCellView(post: Post(postid: 1, content: "Sample post", user_name: "Hari" ))
+    PostCellView(post: Post(id: 0, username: "Hari", userid: 0, content: "Sample post", likes: 0, posttype: "text"))
 }

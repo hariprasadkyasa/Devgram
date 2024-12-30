@@ -11,24 +11,39 @@ import Foundation
 struct CodeBlockView: View {
     var code: String
     var body: some View {
-        ScrollView() { // Allow horizontal scrolling for long lines
-            HStack{
-                Text(attributedString(for: code)) // Display the formatted code
-                    .font(.system(.body, design: .monospaced)) // Use monospaced font
-                    .padding()
-                    .multilineTextAlignment(.leading) // Left-align the code
-                    .foregroundColor(.white) // Default text color
-                Spacer()
+        VStack{
+            ScrollView() { // Allow horizontal scrolling for long lines
+                HStack{
+                    Text(attributedString(for: code)) // Display the formatted code
+                        .font(.system(.body, design: .monospaced)) // Use monospaced font
+                        .padding()
+                        .multilineTextAlignment(.leading) // Left-align the code
+                        .foregroundColor(.white) // Default text color
+                    Spacer()
+                }
+                
+                
+                
+                
+                
             }
-            .background(Color.black) // Dark background for the code block
-            .cornerRadius(8)
-            .shadow(radius: 2) // Slight shadow for depth
-            
-            
+            .scrollIndicators(.hidden)
             
         }
-        .padding(.horizontal)
-        .scrollIndicators(.hidden)
+        .frame(width: UIScreen.main.bounds.width, height:300)
+        .background(Color.black.opacity(0.8))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .overlay {
+            HStack{
+                Spacer()
+                Image(systemName: "apple.terminal.circle")
+                    .foregroundColor(Color.red)
+                    .font(.title)
+                    .scaleEffect(2)
+                
+            }.padding(.horizontal, 30)
+                .offset(y: 70)
+        }
     }
     
     func attributedString(for code: String) -> AttributedString {

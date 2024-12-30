@@ -10,10 +10,12 @@ import Foundation
 class CreatePostViewModel : ObservableObject{
     private let postsService = PostsServiceManager()
     @Published var postContent : String = ""
+    @Published var displayOverlayMessage : Bool = false
+    let postTypes : [String] = [PostType.text.rawValue, PostType.code.rawValue, PostType.link.rawValue]
     
-    func createPost() async throws{
+    func createPost(type : Int, for currentUser : User) async throws{
         //instantiate new Post object and send to service
-        let post = Post(postid: 0, content: postContent, user_name: "hari", user_id: 1)
+        let post = Post(id: 0, username: currentUser.name, userid: currentUser.userId, content: postContent, likes: 0, posttype: postTypes[type])
         do {
             let isSuccess = try await postsService.createPost(post: post)
             if isSuccess{

@@ -8,26 +8,35 @@
 import Foundation
 import SwiftUI
 
+enum Tab: Int, Hashable {
+    case posts
+    case createPost
+    case profile
+}
+
 public struct MainTabView: View {
     @StateObject var postsViewModel: PostsViewModel = PostsViewModel()
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @State private var selectedTab: Tab = .posts
     public var body: some View {
-        TabView {
+        TabView (selection: $selectedTab){
             PostsView(postsViewModel: postsViewModel)
                 .tabItem {
                     Image(systemName: "house")
-                }
-            CreatePostView()
+                }.tag(Tab.posts)
+            CreatePostView(currentSelectedTab : $selectedTab)
                 .tabItem {
                     Image(systemName: "plus.square.fill")
-                }
+                }.tag(Tab.createPost)
             ProfileView()
                 .tabItem {
                     Image(systemName: "person.crop.square")
-                }
+                }.tag(Tab.profile)
         }
         .accentColor(Color.black)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.automatic)
         .navigationBarBackButtonHidden()
+        .navigationTitle(Constants.Labels.AppName)
         
     }
 }
