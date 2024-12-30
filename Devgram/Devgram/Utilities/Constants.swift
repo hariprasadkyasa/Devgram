@@ -17,4 +17,8 @@ enum Constants {
         static let userTokenKey = "authToken"
     }
     
+    enum Labels {
+        static let AppName = "Devgram"
+    }
+    
 }

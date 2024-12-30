@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = PostsViewModel()
-    @State var message = "Hello, world!"
     var body: some View {
         LoginView()
     }

@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject var profileViewModel = ProfileViewModel()
-    @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var loginViewModel : LoginViewModel
     var body: some View {
         VStack{
-            if let user = profileViewModel.currentUser{
+            if let user = loginViewModel.currentUser{
                 VStack{
                     HStack{
                         Text(user.name)
@@ -23,9 +23,7 @@ struct ProfileView: View {
                     }
                     Button {
                         Task{
-                            if await profileViewModel.logout(){
-                                presentation.wrappedValue.dismiss()
-                            }
+                            await loginViewModel.logout()
                         }
                     } label: {
                         Text("Logout")
@@ -46,7 +44,7 @@ struct ProfileView: View {
             
         }.onAppear{
             Task {
-                await profileViewModel.getUserProfile()
+                await loginViewModel.getUserProfile()
             }
         }
     }

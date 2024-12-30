@@ -13,7 +13,6 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack{
-                // Title
                 Text("Welcome!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
@@ -71,19 +70,21 @@ struct LoginView: View {
             }
             .onAppear {
                 Task { await loginViewModel.checkIfUserAuthenticated() }
-                
             }
             .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $loginViewModel.userAuthenticated) {
                 MainTabView()
+                    .environmentObject(loginViewModel)
             }
             .sheet(isPresented: $displaySignUpView) {
                 SignupView(isPresented: $displaySignUpView, userAuthenticated: $loginViewModel.userAuthenticated)
             }
-            
-            
-            
+            .overlay {
+                if loginViewModel.authenticationInProgress{
+                    OverlayMessageView(message: "Signing you in...", showProgress: true)
+                }
+            }
         }
         
     }

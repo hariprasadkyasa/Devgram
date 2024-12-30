@@ -17,7 +17,16 @@ class PostsServiceManager : NetworkConnector, PostsService {
         return posts
     }
     
-    func createPost(post: Post) async throws -> Bool{
+//    func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
+//        return [
+//            Post(id: 0, username: "Hariprasad", userid: 0, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", likes: 0, posttype: "code"),
+//            Post(id: 1, username: "Hari", userid: 1, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", likes: 0, posttype: "code"),
+//            Post(id: 2, username: "Raghu", userid: 2, content: "Normal text post", likes: 0, posttype: "text"),
+//            Post(id: 3, username: "Prasad", userid: 3, content: "www.developer.apple.com", likes: 0, posttype: "link"),
+//        ]
+//    }
+    
+    func createPost(post: Encodable) async throws -> Bool{
         do {
             if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
                 _ = try await loadRequest(endpoint: PostsEndPoint.createPost(post: post, token: token))
@@ -39,15 +48,7 @@ class PostsServiceManager : NetworkConnector, PostsService {
 //        return posts
 //    }
     
-//    func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
-//        return [
-//            Post(postid: 1, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", user_name: "Hari"),
-//            Post(postid: 2, content: "Sample post 2", user_name: "Hari prasad"),
-//            Post(postid: 3, content: "Sample post 3", user_name: "Raghavendra"),
-//            Post(postid: 4, content: "Sample post 4", user_name: "Prasad"),
-//            Post(postid: 5, content: "Sample post 5", user_name: "Raghu"),
-//        ]
-//    }
+    
     
 //    func createPost(post: Post) async throws -> Bool{
 //        let postData = try JSONEncoder().encode(post)

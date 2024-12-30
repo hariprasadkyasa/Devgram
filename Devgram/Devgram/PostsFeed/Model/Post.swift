@@ -6,9 +6,20 @@
 //
 
 import Foundation
+
+enum PostType : String , Codable{
+    case text 
+    case code
+    case link
+}
+
+
 struct Post :  Codable{
-    var postid : Int
+    var id : Int
+    var username : String
+    var userid : Int
     var content : String
-    var user_name : String
-    var user_id : Int = 1
+    var likes : Int
+    var posttype : String
+    
 }
