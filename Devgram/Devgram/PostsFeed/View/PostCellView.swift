@@ -17,11 +17,10 @@ struct PostCellView: View {
             }.padding(.leading)
             
             VStack{
-                Text(post.content)
+                //Text(post.content)
+                CodeBlockView(code: post.content)
             }
             .frame(width: UIScreen.main.bounds.width, height:200)
-            .background(.gray)
-            .cornerRadius(30)
         }
         
     }

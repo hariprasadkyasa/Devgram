@@ -19,7 +19,7 @@ class PostsServiceManager {
     
     func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
         return [
-            Post(postid: 1, content: "Sample post 1", user_name: "Hari"),
+            Post(postid: 1, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", user_name: "Hari"),
             Post(postid: 2, content: "Sample post 2", user_name: "Hari prasad"),
             Post(postid: 3, content: "Sample post 3", user_name: "Raghavendra"),
             Post(postid: 4, content: "Sample post 4", user_name: "Prasad"),
