@@ -26,7 +26,7 @@ class PostsServiceManager : NetworkConnector, PostsService {
 //        ]
 //    }
     
-    func createPost(post: Encodable) async throws -> Bool{
+    func createPost(post: Post) async throws -> Bool{
         do {
             if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
                 _ = try await loadRequest(endpoint: PostsEndPoint.createPost(post: post, token: token))
@@ -37,32 +37,15 @@ class PostsServiceManager : NetworkConnector, PostsService {
         return true
     }
     
-    
-//    func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
-//        let postsURLString = "https://eminentnose-us.backendless.app/api/data/Posts?pageSize=\(quantity)&offset=\(offset)&sortBy=created"
-//        guard let postsURL = URL(string: postsURLString) else {return []}
-//        
-//        let (responseData, httpResponse) = try await URLSession.shared.data(from: postsURL)
-//        guard (httpResponse as? HTTPURLResponse)?.statusCode == 200 else {return []}
-//        let posts = try JSONDecoder().decode([Post].self, from: responseData)
-//        return posts
-//    }
-    
-    
-    
-//    func createPost(post: Post) async throws -> Bool{
-//        let postData = try JSONEncoder().encode(post)
-//        let postURLString = "https://eminentnose-us.backendless.app/api/data/Posts"
-//        guard let postURL = URL(string: postURLString) else {return false}
-//        var request = URLRequest(url: postURL)
-//        request.httpMethod = "POST"
-//        request.httpBody = postData
-//        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
-//        let (_, response) = try await URLSession.shared.data(for: request)
-//        let httpResponse = response as? HTTPURLResponse
-//        guard (httpResponse)?.statusCode == 200 else {return false}
-//        return true
-//    }
-    
+    func updatePost(post: Post) async throws -> Bool{
+        do {
+            if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
+                _ = try await loadRequest(endpoint: PostsEndPoint.updatePost(post: post, token: token))
+            }
+        }catch{
+            return false
+        }
+        return true
+    }
     
 }

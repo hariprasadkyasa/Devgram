@@ -9,6 +9,6 @@ import Foundation
 
 protocol PostsService {
     func getPosts(quantity: Int, offset: Int) async throws -> [Post]
-    func createPost(post: Encodable) async throws -> Bool
+    func createPost(post: Post) async throws -> Bool
 }
 
