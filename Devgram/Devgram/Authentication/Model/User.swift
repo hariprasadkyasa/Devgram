@@ -13,7 +13,7 @@ struct User : Codable{
     var email : String
     
     enum CodingKeys : String, CodingKey{
-        case userId = "user_id"
+        case userId = "userid"
         case name = "name"
         case token = "user-token"
         case email = "email"

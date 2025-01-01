@@ -9,7 +9,7 @@ import Foundation
 class PostGridViewModel: ObservableObject {
     private let postsService = PostsServiceManager()
     @Published var posts = [Post]()
-    var isDataFetched = false
+    @Published var fetchingData = false
 
     var postsCount: Int {
         posts.count
@@ -17,9 +17,14 @@ class PostGridViewModel: ObservableObject {
 
     @MainActor
     func fetchUserPosts(userId: Int) async throws {
-        if !isDataFetched {
+        do {
+            fetchingData = true
             posts = try await postsService.getPosts(userId: userId)
-            isDataFetched = true
+            fetchingData = false
+            print("Done fetching user posts!")
+        }catch{
+            print("Error fetching user posts!", error)
         }
+        
     }
 }

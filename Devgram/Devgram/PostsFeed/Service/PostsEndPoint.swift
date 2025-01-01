@@ -62,7 +62,7 @@ extension PostsEndPoint: NetworkEndPoint {
         case .getPosts(count:let count, index:let index, token:_):
             return [URLQueryItem(name: "pageSize", value: String(count)), URLQueryItem(name: "offset", value: String(index)), URLQueryItem(name: "sortBy", value: "created desc")]
         case .getUserPosts(count:let count, index:let index, userId: let userId, token:_):
-            return [URLQueryItem(name: "pageSize", value: String(count)), URLQueryItem(name: "offset", value: String(index)), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "userid", value: String(userId))]
+            return [URLQueryItem(name: "pageSize", value: String(count)), URLQueryItem(name: "offset", value: String(index)), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "where", value: "userid="+String(userId))]
         case .createPost, .updatePost:
             return nil
         }

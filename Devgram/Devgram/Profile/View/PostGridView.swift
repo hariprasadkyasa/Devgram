@@ -22,7 +22,7 @@ struct PostGridView: View {
         LazyVGrid(columns: gridItems, spacing: 1) {
             ForEach(posts, id: \.id) { post in
                 NavigationLink {
-                    SinglePostView()
+                    //
                 } label: {
                     PostContentView(post: post, displayMode: .displayModeProfile)
                 }
