@@ -11,7 +11,7 @@ struct LoginView: View {
     @StateObject var loginViewModel = LoginViewModel()
     @State var displaySignUpView : Bool = false
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack{
                 Text("Welcome!")
                     .font(.largeTitle)
@@ -37,7 +37,6 @@ struct LoginView: View {
                     Spacer()
                         .frame(height: 20)
                     Button {
-                        //just navigate to home view for now
                         Task{
                             await loginViewModel.login()
                         }
@@ -67,16 +66,13 @@ struct LoginView: View {
                         }
                     }
                 }
+                
+                NavigationLink("", destination: MainTabView().environmentObject(loginViewModel), isActive: $loginViewModel.userAuthenticated)
             }
             .onAppear {
                 Task { await loginViewModel.checkIfUserAuthenticated() }
             }
             .padding()
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(isPresented: $loginViewModel.userAuthenticated) {
-                MainTabView()
-                    .environmentObject(loginViewModel)
-            }
             .sheet(isPresented: $displaySignUpView) {
                 SignupView(isPresented: $displaySignUpView, userAuthenticated: $loginViewModel.userAuthenticated)
             }

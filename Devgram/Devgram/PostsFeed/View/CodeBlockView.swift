@@ -10,39 +10,37 @@ import Foundation
 
 struct CodeBlockView: View {
     var code: String
+    var displayMode : PostDisplayMode
     var body: some View {
         VStack{
             ScrollView() { // Allow horizontal scrolling for long lines
                 HStack{
                     Text(attributedString(for: code)) // Display the formatted code
-                        .font(.system(.body, design: .monospaced)) // Use monospaced font
+                        .font(.system(displayMode == .displayModeFeed ? .body : .footnote, design: .monospaced)) // Use monospaced font
                         .padding()
                         .multilineTextAlignment(.leading) // Left-align the code
                         .foregroundColor(.white) // Default text color
                     Spacer()
                 }
-                
-                
-                
-                
-                
             }
             .scrollIndicators(.hidden)
             
         }
-        .frame(width: UIScreen.main.bounds.width, height:300)
+        .frame(width: contentSize.width, height:contentSize.height)
         .background(Color.black.opacity(0.8))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
         .overlay {
-            HStack{
-                Spacer()
-                Image(systemName: "apple.terminal.circle")
-                    .foregroundColor(Color.red)
-                    .font(.title)
-                    .scaleEffect(2)
-                
-            }.padding(.horizontal, 30)
-                .offset(y: 70)
+            if displayMode == .displayModeFeed {
+                HStack{
+                    Spacer()
+                    Image(systemName: "apple.terminal.circle")
+                        .foregroundColor(Color.red)
+                        .font(.title)
+                        .scaleEffect(2)
+                    
+                }.padding(.horizontal, 30)
+                    .offset(y: 70)
+            }
         }
     }
     
@@ -74,6 +72,17 @@ struct CodeBlockView: View {
             return attributedString
     }
     
+    var contentSize : CGSize{
+        var size = CGSize()
+        size.width = UIScreen.main.bounds.width
+        size.height = 300
+        if displayMode == .displayModeProfile{
+            size.width = UIScreen.main.bounds.width/3 - 1
+            size.height = 100
+        }
+        return size
+    }
+    
 }
 
 extension String {
@@ -91,5 +100,5 @@ extension String {
 
 
 #Preview{
-    CodeBlockView(code: "var testVar = Test()" )
+    CodeBlockView(code: "var testVar = Test()", displayMode: .displayModeFeed )
 }

@@ -22,18 +22,7 @@ struct PostCellView: View {
                     .fontWeight(.semibold)
             }.padding(.horizontal)
             
-            VStack{
-                switch post.posttype{
-                case PostType.text.rawValue:
-                    PostTextView(text: post.content)
-                case PostType.code.rawValue:
-                    CodeBlockView(code: post.content)
-                case PostType.link.rawValue:
-                    PostLinkView(linkText: post.content)
-                default:
-                    PostTextView(text: post.content)
-                }
-            }
+            PostContentView(post: post)
             
             HStack{
                 Button {

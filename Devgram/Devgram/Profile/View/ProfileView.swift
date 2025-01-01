@@ -8,43 +8,34 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var profileViewModel = ProfileViewModel()
-    @EnvironmentObject var loginViewModel : LoginViewModel
+    @StateObject var viewModel: PostGridViewModel = PostGridViewModel()
+    @EnvironmentObject var loginViewModel: LoginViewModel
+
+
     var body: some View {
         VStack{
-            if let user = loginViewModel.currentUser{
-                VStack{
-                    HStack{
-                        Text(user.name)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.black)
-                        Spacer()
-                    }
-                    Button {
-                        Task{
-                            await loginViewModel.logout()
-                        }
-                    } label: {
-                        Text("Logout")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.red)
-                            .cornerRadius(10)
-                    }
-                }
-                
-            }else{
-                ProgressView {
-                    Text("Loading...")
-                }
-            }
+            ScrollView {
+                // header
+                ProfileHeaderView()
+                // post grid view
+                PostGridView(posts: viewModel.posts)
+            }.padding(.vertical)
             
-        }.onAppear{
-            Task {
-                await loginViewModel.getUserProfile()
+            .refreshable {
+                getPosts()
+            }
+            .environmentObject(viewModel)
+            .onAppear {
+                getPosts()
+            }
+        }.navigationBarTitle("Profile")
+        
+    }
+    
+    func getPosts(){
+        Task {
+            if let currentUser = loginViewModel.currentUser {
+                try await viewModel.fetchUserPosts(userId: currentUser.userId)
             }
         }
     }
@@ -52,4 +43,5 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(LoginViewModel())
 }
