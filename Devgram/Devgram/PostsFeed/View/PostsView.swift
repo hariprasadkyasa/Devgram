@@ -28,9 +28,21 @@ struct PostsView : View {
                                     }
                                 }
                             }
+                            .onAppear{
+                                if index == postsViewModel.posts.count - 1{
+                                    Task {try await postsViewModel.loadNextSetOfPosts()}
+                                }
+                            }
+                            
                         }
 
                     }
+                }
+                if postsViewModel.posts.isEmpty{
+                    Text("No posts to show!")
+                }
+                if postsViewModel.isLoadingData{
+                    ProgressView()
                 }
             }.refreshable {
                 Task {

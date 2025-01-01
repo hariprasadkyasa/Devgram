@@ -18,15 +18,24 @@ struct ProfileView: View {
                 // header
                 ProfileHeaderView()
                 // post grid view
+                if viewModel.fetchingData{
+                    ProgressView("Loading data...")
+                }else if viewModel.postsCount == 0{
+                    Text("You have not posted anything yet!")
+                }
                 PostGridView(posts: viewModel.posts)
+                
             }.padding(.vertical)
-            
             .refreshable {
                 getPosts()
             }
             .environmentObject(viewModel)
             .onAppear {
-                getPosts()
+                print("On appear of Profile")
+                if !viewModel.fetchingData{
+                    getPosts()
+                }
+                
             }
         }.navigationBarTitle("Profile")
         
