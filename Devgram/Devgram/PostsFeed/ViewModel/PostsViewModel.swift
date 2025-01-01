@@ -15,7 +15,7 @@ class PostsViewModel: ObservableObject{
     @MainActor
     func loadPosts() async throws{
         do{
-            let posts = try await postsService.getPosts()
+            let posts = try await postsService.getPosts(userId: nil)
             if posts.count > 0{
                 //display posts
                 self.posts = posts

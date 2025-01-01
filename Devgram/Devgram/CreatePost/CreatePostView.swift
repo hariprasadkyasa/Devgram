@@ -15,9 +15,28 @@ struct CreatePostView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
-            Text("Create Post")
-                .font(.title)
+            HStack{
+                Text("Create Post")
+                    .font(.title)
+                Spacer()
+                Button {
+                    if let clipboardText = UIPasteboard.general.string {
+                        createPostViewModel.postContent = clipboardText
+                    }
+                } label: {
+                    Text("Paste")
+                        .font(.caption)
+                        .foregroundStyle(Color.black)
+                        .padding(5)
+                        .border(Color.gray, width: 1)
+                        .cornerRadius(3.0)
+                }
+
+            }
+            
             TextEditor(text: $createPostViewModel.postContent)
+                .autocorrectionDisabled()
+                .textInputAutocapitalization(selectedPostType == 1 ? .never : .sentences)
                 .scrollContentBackground(.hidden)
                 .background(selectedPostType == 1 ? Color.black : Color.white)
                 .font(.system(.body, design: selectedPostType == 1 ? .monospaced : .default))
@@ -57,6 +76,7 @@ struct CreatePostView: View {
             }.disabled(createPostViewModel.postContent.isEmpty)
             
         }
+        .navigationBarTitle("New Post")
         .padding()
         .overlay {
             if createPostViewModel.displayOverlayMessage {
@@ -65,6 +85,7 @@ struct CreatePostView: View {
             
         }
     }
+    
     
     var fontColor : Color {
         switch selectedPostType {

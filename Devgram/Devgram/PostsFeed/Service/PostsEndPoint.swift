@@ -10,13 +10,14 @@ enum PostsEndPoint {
     case getPosts(count:Int, index:Int, token:String)
     case createPost(post:Post, token:String)
     case updatePost(post:Post, token:String)
+    case getUserPosts(count:Int, index:Int,userId:Int, token:String)
     
 }
 
 extension PostsEndPoint: NetworkEndPoint {
     var method: HTTPMethods {
         switch self{
-            case .getPosts: return .get
+        case .getPosts, .getUserPosts: return .get
         case .createPost: return .post
         case .updatePost: return .update
         }
@@ -24,7 +25,7 @@ extension PostsEndPoint: NetworkEndPoint {
     
     var path: String {
         switch self{
-        case .getPosts, .createPost :
+        case .getPosts, .createPost, .getUserPosts:
             return "/api/data/Posts"
         case .updatePost(post:let post, token: _):
             if let objectID = post.objectId{
@@ -40,7 +41,7 @@ extension PostsEndPoint: NetworkEndPoint {
     
     var body: (any Encodable)? {
         switch self{
-        case .getPosts:
+        case .getPosts, .getUserPosts:
             return nil
         case .createPost(post:let post, token: _), .updatePost(post:let post, token: _):
             return post
@@ -49,7 +50,7 @@ extension PostsEndPoint: NetworkEndPoint {
     
     var headers: [String : String]? {
         switch self{
-            case .getPosts:
+        case .getPosts, .getUserPosts:
             return commonHeaders
         case .createPost(post:_, token: let token), .updatePost(post:_, token: let token):
             return ["user-token": token, "Content-Type": "application/json"]
@@ -60,6 +61,8 @@ extension PostsEndPoint: NetworkEndPoint {
         switch self{
         case .getPosts(count:let count, index:let index, token:_):
             return [URLQueryItem(name: "pageSize", value: String(count)), URLQueryItem(name: "offset", value: String(index)), URLQueryItem(name: "sortBy", value: "created desc")]
+        case .getUserPosts(count:let count, index:let index, userId: let userId, token:_):
+            return [URLQueryItem(name: "pageSize", value: String(count)), URLQueryItem(name: "offset", value: String(index)), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "sortBy", value: "updated desc"), URLQueryItem(name: "userid", value: String(userId))]
         case .createPost, .updatePost:
             return nil
         }

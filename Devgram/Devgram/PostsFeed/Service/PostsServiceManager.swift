@@ -6,13 +6,17 @@
 //
 
 import Foundation
-class PostsServiceManager : NetworkConnector, PostsService {
+class PostsServiceManager : NetworkConnector {
     
     
-    func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
+    func getPosts(quantity: Int = 10, offset: Int = 0, userId: Int?) async throws -> [Post]{
         var posts = [Post]()
         if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
-            posts = try await loadRequest(type: [Post].self, endpoint: PostsEndPoint.getPosts(count: quantity, index: offset, token: token))
+            if let userId{
+                posts = try await loadRequest(type: [Post].self, endpoint: PostsEndPoint.getUserPosts(count: quantity, index: offset, userId: userId, token: token))
+            }else{
+                posts = try await loadRequest(type: [Post].self, endpoint: PostsEndPoint.getPosts(count: quantity, index: offset, token: token))
+            }
         }
         return posts
     }

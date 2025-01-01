@@ -32,6 +32,10 @@ struct PostsView : View {
 
                     }
                 }
+            }.refreshable {
+                Task {
+                    try await postsViewModel.loadPosts()
+                }
             }
         
         }.onAppear{

@@ -37,7 +37,6 @@ public struct MainTabView: View {
         .navigationBarTitleDisplayMode(.automatic)
         .navigationBarBackButtonHidden()
         .navigationTitle(Constants.Labels.AppName)
-        
     }
 }
 
