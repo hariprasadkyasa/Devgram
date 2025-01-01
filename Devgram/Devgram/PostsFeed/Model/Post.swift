@@ -21,5 +21,8 @@ struct Post :  Codable{
     var content : String
     var likes : Int
     var posttype : String
-    
+    var created : TimeInterval
+    var updated : TimeInterval
+    var likedby : [Int]
+    var objectId : String?
 }

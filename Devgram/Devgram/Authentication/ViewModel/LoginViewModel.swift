@@ -23,6 +23,7 @@ class LoginViewModel : ObservableObject {
             if let user = try await authService.loginUser(username: username, password: password){
                 currentUser = user
                 userAuthenticated = true
+                print("The current user data \(user)")
             }
             authenticationInProgress = false
         }catch {

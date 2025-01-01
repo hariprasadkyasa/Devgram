@@ -29,7 +29,7 @@ extension NetworkConnector {
         //configure request from the endpoint
         var urlRequest = URLRequest(url:url)
         urlRequest.httpMethod = endpoint.method.rawValue
-        if endpoint.method == .post {
+        if endpoint.method == .post || endpoint.method == .update {
             if let body = endpoint.body {
                 urlRequest.httpBody = try JSONEncoder().encode(body)
             }
