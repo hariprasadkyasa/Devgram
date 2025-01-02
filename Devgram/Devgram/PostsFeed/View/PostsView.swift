@@ -31,7 +31,7 @@ struct PostsView : View {
                             }
                             .onAppear{
                                 if index == viewModel.posts.count - 1{
-                                    Task {try await viewModel.loadNextSetOfPosts()}
+                                    Task { await viewModel.loadNextSetOfPosts()}
                                 }
                             }
                             
@@ -39,11 +39,11 @@ struct PostsView : View {
 
                     }
                 }
-                if viewModel.posts.isEmpty{
-                    Text(Constants.Labels.NoPostsInFeedMessage)
-                }
-                if viewModel.isLoadingData{
+                
+                if viewModel.isLoading{
                     ProgressView()
+                }else if viewModel.posts.isEmpty{
+                    Text(Constants.Labels.NoPostsInFeedMessage)
                 }
             }.refreshable {
                 Task {

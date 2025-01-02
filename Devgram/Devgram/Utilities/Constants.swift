@@ -20,6 +20,8 @@ enum Constants {
     enum Labels {
         static let AppName = "Devgram"
         static let NoPostsInFeedMessage = "No posts to show!"
+        static let NoPostsInProfileMessage = "You have not posted anything yet!"
+        static let ProvideSignupDetailsMessage = "Provide your details"
     }
     
     enum ErrorMessages {
@@ -31,6 +33,7 @@ enum Constants {
         static let signOutErrorHeading = "Error Signing Out"
         static let errorFetchingPostsHeading = "Could not load posts"
         static let errorUpdatingLikeHeading = "Could not update post"
+        static let errorCreatingPostHeading = "Could not share post"
     }
     
 }

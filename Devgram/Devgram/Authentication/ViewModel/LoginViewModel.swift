@@ -28,7 +28,6 @@ class LoginViewModel : BaseViewModel {
                 userAuthenticated = true
                 username = ""
                 password = ""
-                print("The current user data \(user)")
             }
         }catch {
             print("The error while login:", error.localizedDescription)

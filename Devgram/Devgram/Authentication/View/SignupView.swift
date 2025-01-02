@@ -17,7 +17,7 @@ struct SignupView: View {
     }
     var body: some View {
         VStack{
-            Text("Provide your details")
+            Text(Constants.Labels.ProvideSignupDetailsMessage)
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.bottom, 30)

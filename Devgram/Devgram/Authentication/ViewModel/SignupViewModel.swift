@@ -11,7 +11,7 @@ class SignupViewModel: BaseViewModel {
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var email: String = ""
-    @Published var isLoading: Bool = false
+    
     private let authService: AuthenticationService
     
     init(authService: AuthenticationService){
@@ -32,7 +32,7 @@ class SignupViewModel: BaseViewModel {
             return try await authService.loginUser(username: username, password: password)
         }catch{
             print("Error signing up: \(error)")
-            
+            displayError(error: error, heading: Constants.ErrorMessages.signupErrorHeading)
         }
         isLoading = false
         return nil

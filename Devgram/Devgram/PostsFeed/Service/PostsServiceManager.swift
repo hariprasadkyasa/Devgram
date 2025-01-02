@@ -20,26 +20,16 @@ class PostsServiceManager : NetworkConnector, PostsService {
         return posts
     }
         
-    func createPost(post: Post) async throws -> Bool{
-        do {
-            if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
-                _ = try await loadRequest(endpoint: PostsEndPoint.createPost(post: post, token: token))
-            }
-        }catch{
-            return false
+    func createPost(post: Post) async throws{
+        if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
+            _ = try await loadRequest(endpoint: PostsEndPoint.createPost(post: post, token: token))
         }
-        return true
     }
     
-    func updatePost(post: Post) async throws -> Bool{
-        do {
-            if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
-                _ = try await loadRequest(endpoint: PostsEndPoint.updatePost(post: post, token: token))
-            }
-        }catch{
-            return false
+    func updatePost(post: Post) async throws{
+        if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
+            _ = try await loadRequest(endpoint: PostsEndPoint.updatePost(post: post, token: token))
         }
-        return true
     }
     
 }

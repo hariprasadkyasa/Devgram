@@ -16,6 +16,7 @@ class BaseViewModel : ObservableObject {
     @Published var displayMessage : Bool = false
     @Published var messageToDisplay : Message = Message(heading: "", message: "")
     @Published var displayOverlayMessage : Bool = false
+    @Published var isLoading: Bool = false
     var overlayMessage : String = ""
     
     func displayError(error: Error, heading: String){

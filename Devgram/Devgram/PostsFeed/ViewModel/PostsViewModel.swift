@@ -9,7 +9,6 @@ import Foundation
 class PostsViewModel: BaseViewModel{
     private let postsService : PostsService
     @Published var posts : [Post] = [Post]()
-    @Published var isLoadingData : Bool = false
     var offset : Int = 0
     
     init(postsService : PostsService){
@@ -19,35 +18,35 @@ class PostsViewModel: BaseViewModel{
     @MainActor
     func loadPosts() async{
         do{
+            isLoading = true
             let posts = try await postsService.getPosts(quantity: 3,offset: offset , userId: nil)
             if posts.count > 0{
                 //display posts
                 self.posts = posts
-                print("The posts from the server are \(posts.count): \(posts)")
             }
         } catch {
             print("error fetching posts: ",error.localizedDescription)
             displayError(error: error, heading: Constants.ErrorMessages.errorFetchingPostsHeading)
             
         }
+        isLoading = true
     }
     
     @MainActor
-    func loadNextSetOfPosts() async throws{
+    func loadNextSetOfPosts() async {
         do{
-            isLoadingData = true
+            isLoading = true
             offset += 3
             let posts = try await postsService.getPosts(quantity: 3,offset: offset , userId: nil)
             if posts.count > 0{
                 //display posts
                 self.posts.append(contentsOf: posts)
-                print("The next set of posts from the server are \(posts.count), Total posts \(self.posts.count)")
             }
-            isLoadingData = false
         } catch {
             print("error fetching next posts: ",error.localizedDescription)
             displayError(error: error, heading: Constants.ErrorMessages.errorFetchingPostsHeading)
         }
+        isLoading = false
     }
     
     
@@ -61,12 +60,10 @@ class PostsViewModel: BaseViewModel{
         }
         do{
             //post this to server
-            if try await postsService.updatePost(post: currentPost){
-                
-            }
+            try await postsService.updatePost(post: currentPost)
         }catch {
             print("Error while updating like!", error)
-            overlayMessage = "Error updating like!"
+            overlayMessage = Constants.ErrorMessages.errorUpdatingLikeHeading
             displayOverlayMessage = true
         }
         
