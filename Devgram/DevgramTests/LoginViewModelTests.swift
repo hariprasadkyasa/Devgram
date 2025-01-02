@@ -61,6 +61,41 @@ final class LoginViewModelTests: XCTestCase {
             await fulfillment(of: [expectation], timeout: 2.0)
         }
     }
+    
+    func testAuthenticationStateShouldBeValid() async{
+        //test to check the autheticate status to be valid
+        //after successful login
+        if let loginViewModel = uut {
+            let loginExpectation = XCTestExpectation(description: "user_login")
+            loginViewModel.username = "Test User"
+            loginViewModel.password = "test1234"
+            await uut?.login()
+            loginExpectation.fulfill()
+            let authStateExpectation = XCTestExpectation(description: "authentication_state")
+            await loginViewModel.checkIfUserAuthenticated()
+            authStateExpectation.fulfill()
+            XCTAssertTrue(loginViewModel.userAuthenticated)
+            XCTAssertEqual(loginViewModel.messageToDisplay.message, "")
+            XCTAssertFalse(loginViewModel.displayMessage)
+            XCTAssertNotNil(loginViewModel.currentUser)
+            XCTAssertTrue(loginViewModel.userAuthenticated)
+            await fulfillment(of: [authStateExpectation, loginExpectation], timeout: 3.0)
+        }
+    }
+    
+    func testAuthenticationStateShouldBeInValid() async{
+        //test to check the autheticate status to be valid
+        //after successful login
+        if let loginViewModel = uut {
+            let expectation = XCTestExpectation(description: "authentication_state")
+            await loginViewModel.checkIfUserAuthenticated()
+            expectation.fulfill()
+            XCTAssertFalse(loginViewModel.userAuthenticated)
+            XCTAssertNil(loginViewModel.currentUser)
+            XCTAssertFalse(loginViewModel.userAuthenticated)
+            await fulfillment(of: [expectation], timeout: 2.0)
+        }
+    }
 
     
 
