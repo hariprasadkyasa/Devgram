@@ -24,8 +24,8 @@ class MockPostsService: PostsService {
     }
     
     func createPost(post: Post) async throws {
-        //throw error if post doesnt have object id for testing
-        if post.objectId == nil {
+        //throw error if user id is zero on post for testing
+        if post.userid == 0 {
             throw ConnectionError.invalidRequest
         }
     }
