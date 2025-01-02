@@ -16,18 +16,24 @@ enum Tab: Int, Hashable {
 
 public struct MainTabView: View {
     @State var userSessionManager: UserSessionManager
+    @State var postsService : PostsService
     @State private var selectedTab: Tab = .posts
+    
+    init(userSessionManager: UserSessionManager, postsService: PostsService) {
+        _userSessionManager = .init(wrappedValue: userSessionManager)
+        _postsService = .init(wrappedValue: postsService)
+    }
     public var body: some View {
         TabView (selection: $selectedTab){
-            PostsView(userSessionManager: userSessionManager)
+            PostsView(userSessionManager: userSessionManager, postsService: postsService)
                 .tabItem {
                     Image(systemName: "house")
                 }.tag(Tab.posts)
-            CreatePostView(userSessionManager: userSessionManager, currentSelectedTab : $selectedTab)
+            CreatePostView(userSessionManager: userSessionManager, postsService: postsService, currentSelectedTab : $selectedTab)
                 .tabItem {
                     Image(systemName: "plus.square.fill")
                 }.tag(Tab.createPost)
-            ProfileView(userSessionManager: userSessionManager)
+            ProfileView(userSessionManager: userSessionManager, postsService: postsService)
                 .tabItem {
                     Image(systemName: "person.crop.square")
                 }.tag(Tab.profile)
@@ -39,6 +45,3 @@ public struct MainTabView: View {
     }
 }
 
-#Preview {
-    MainTabView(userSessionManager: LoginViewModel())
-}

@@ -13,8 +13,8 @@ struct CreatePostView: View {
     @State private var selectedPostType = 0
     @Binding var currentSelectedTab: Tab
     
-    init(userSessionManager: UserSessionManager, currentSelectedTab: Binding<Tab>) {
-        _createPostViewModel = .init(wrappedValue: CreatePostViewModel(postsService: PostsServiceManager()))
+    init(userSessionManager: UserSessionManager,postsService: PostsService, currentSelectedTab: Binding<Tab>) {
+        _createPostViewModel = .init(wrappedValue: CreatePostViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
         _currentSelectedTab = .init(projectedValue: currentSelectedTab)
     }
@@ -108,6 +108,4 @@ struct CreatePostView: View {
     }
 }
 
-#Preview {
-    CreatePostView(userSessionManager: LoginViewModel(), currentSelectedTab: .constant(Tab.createPost))
-}
+

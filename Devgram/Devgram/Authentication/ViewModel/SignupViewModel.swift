@@ -13,7 +13,12 @@ class SignupViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var errorMessage: String?
     @Published var isLoading: Bool = false
-    private let authService: AuthenticationServiceManager = AuthenticationServiceManager()
+    private let authService: AuthenticationService
+    
+    init(authService: AuthenticationService){
+        self.authService = authService
+    }
+    
     @MainActor
     func signup() async -> User?{
         guard !username.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !email.isEmpty && password == confirmPassword else {
@@ -21,12 +26,14 @@ class SignupViewModel: ObservableObject {
             return nil
         }
         do{
+            isLoading = true
             _ = try await authService.createUser(userDetails: ["email":email, "name":username, "password":password])
             //registration success, sign in
             return try await authService.loginUser(username: username, password: password)
         }catch{
             print("Error signing up: \(error)")
         }
+        isLoading = false
         return nil
     }
 }

@@ -12,8 +12,8 @@ struct PostsView : View {
     @StateObject var postsViewModel: PostsViewModel
     @State var userSessionManager: UserSessionManager
     
-    init(userSessionManager: UserSessionManager){
-        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: PostsServiceManager()))
+    init(userSessionManager: UserSessionManager, postsService: PostsService){
+        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
     }
     var body: some View {

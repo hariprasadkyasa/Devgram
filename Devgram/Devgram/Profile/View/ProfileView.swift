@@ -11,8 +11,8 @@ struct ProfileView: View {
     @StateObject var viewModel: ProfileViewModel
     @State var userSessionManager: UserSessionManager
     
-    init(userSessionManager: UserSessionManager) {
-        _viewModel = .init(wrappedValue: ProfileViewModel(postsService: PostsServiceManager()))
+    init(userSessionManager: UserSessionManager, postsService: PostsService) {
+        _viewModel = .init(wrappedValue: ProfileViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
     }
     
@@ -55,6 +55,4 @@ struct ProfileView: View {
     }
 }
 
-#Preview {
-    ProfileView(userSessionManager : LoginViewModel())
-}
+

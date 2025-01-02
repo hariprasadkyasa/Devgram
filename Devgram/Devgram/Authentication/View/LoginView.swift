@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var loginViewModel = LoginViewModel()
+    @StateObject var loginViewModel : LoginViewModel
+    @State var postsService : PostsService
+    @State var authService : AuthenticationService
     @State var displaySignUpView : Bool = false
+    
+    init(authService: AuthenticationService, postsService: PostsService) {
+        _loginViewModel = .init(wrappedValue: LoginViewModel(authService: authService))
+        _postsService = .init(wrappedValue: postsService)
+        _authService = .init(wrappedValue: authService)
+    }
     var body: some View {
         NavigationView {
             VStack{
@@ -67,14 +75,23 @@ struct LoginView: View {
                     }
                 }
                 
-                NavigationLink("", destination: MainTabView(userSessionManager: loginViewModel), isActive: $loginViewModel.userAuthenticated)
+                NavigationLink("", destination: MainTabView(userSessionManager: loginViewModel, postsService: postsService), isActive: $loginViewModel.userAuthenticated)
             }
             .onAppear {
                 Task { await loginViewModel.checkIfUserAuthenticated() }
             }
             .padding()
             .sheet(isPresented: $displaySignUpView) {
-                SignupView(isPresented: $displaySignUpView, userAuthenticated: $loginViewModel.userAuthenticated)
+                SignupView(authService: authService){ user in
+                    if let user{
+                        loginViewModel.currentUser = user
+                        withAnimation {
+                            displaySignUpView = false
+                        } completion: {
+                            loginViewModel.userAuthenticated = true
+                        }
+                    }
+                }
             }
             .overlay {
                 if loginViewModel.authenticationInProgress{
@@ -86,6 +103,3 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
-}

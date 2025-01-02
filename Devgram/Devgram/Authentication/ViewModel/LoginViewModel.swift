@@ -13,8 +13,12 @@ class LoginViewModel : ObservableObject {
     @Published var userAuthenticated = false
     @Published var authenticationInProgress = false
     @Published var gettingUserAuthenticationStatus = false
-    private var authService = AuthenticationServiceManager()
+    private var authService : AuthenticationService
     @Published var currentUser : User?
+    
+    init(authService: AuthenticationService){
+        self.authService = authService
+    }
     
     @MainActor
     func login() async{
