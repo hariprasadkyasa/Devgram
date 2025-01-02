@@ -8,10 +8,14 @@
 import Foundation
 
 class CreatePostViewModel : ObservableObject{
-    private let postsService = PostsServiceManager()
+    private let postsService : PostsService
     @Published var postContent : String = ""
     @Published var displayOverlayMessage : Bool = false
     let postTypes : [String] = [PostType.text.rawValue, PostType.code.rawValue, PostType.link.rawValue]
+    
+    init(postsService : PostsService){
+        self.postsService = postsService
+    }
     
     func createPost(type : Int, for currentUser : User) async throws{
         //instantiate new Post object and send to service

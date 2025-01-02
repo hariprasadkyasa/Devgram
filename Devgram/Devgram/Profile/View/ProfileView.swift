@@ -8,23 +8,28 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var viewModel: PostGridViewModel = PostGridViewModel()
-    @EnvironmentObject var loginViewModel: LoginViewModel
-
-
+    @StateObject var viewModel: ProfileViewModel
+    @State var userSessionManager: UserSessionManager
+    
+    init(userSessionManager: UserSessionManager, postsService: PostsService) {
+        _viewModel = .init(wrappedValue: ProfileViewModel(postsService: postsService))
+        _userSessionManager = .init(wrappedValue: userSessionManager)
+    }
+    
     var body: some View {
         VStack{
             ScrollView {
                 // header
-                ProfileHeaderView()
+                ProfileHeaderView(userSessionManager: userSessionManager)
+                    .environmentObject(viewModel)
                 // post grid view
+                PostGridView(posts: viewModel.posts)
+                    .environmentObject(viewModel)
                 if viewModel.fetchingData{
-                    ProgressView("Loading data...")
+                    ProgressView()
                 }else if viewModel.postsCount == 0{
                     Text("You have not posted anything yet!")
                 }
-                PostGridView(posts: viewModel.posts)
-                
             }.padding(.vertical)
             .refreshable {
                 getPosts()
@@ -43,14 +48,11 @@ struct ProfileView: View {
     
     func getPosts(){
         Task {
-            if let currentUser = loginViewModel.currentUser {
+            if let currentUser = userSessionManager.getCurrentUser() {
                 try await viewModel.fetchUserPosts(userId: currentUser.userId)
             }
         }
     }
 }
 
-#Preview {
-    ProfileView()
-        .environmentObject(LoginViewModel())
-}
+

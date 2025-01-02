@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DevgramApp: App {
+    @State private var authService: AuthenticationService = AuthenticationServiceManager()
+    @State private var postsService: PostsService = PostsServiceManager()
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            LoginView(authService: authService, postsService: postsService)
         }
     }
 }

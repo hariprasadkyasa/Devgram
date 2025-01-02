@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct ProfileHeaderView: View {
-    @State private var showEditProfile = false
-    @EnvironmentObject var viewModel: PostGridViewModel
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @State var userSessionManager: UserSessionManager
+    @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 10) {
@@ -22,7 +21,7 @@ struct ProfileHeaderView: View {
                     .foregroundColor(Color(.systemGray4))
                 .padding(.horizontal)
                 VStack(alignment: .leading){
-                    if let user = loginViewModel.currentUser {
+                    if let user = userSessionManager.getCurrentUser() {
                         Text(user.name)
                             .font(.subheadline)
                             .fontWeight(.semibold)
@@ -31,7 +30,7 @@ struct ProfileHeaderView: View {
                             .fontWeight(.light)
                         Button {
                             Task {
-                                await loginViewModel.logout()
+                                await userSessionManager.logout()
                             }
                             
                         } label: {
@@ -52,6 +51,3 @@ struct ProfileHeaderView: View {
     }
 }
 
-#Preview {
-    ProfileHeaderView()
-}

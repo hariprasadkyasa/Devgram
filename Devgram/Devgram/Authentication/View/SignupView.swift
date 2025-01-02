@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct SignupView: View {
-    @ObservedObject var signupViewModel = SignupViewModel()
-    @Binding var isPresented: Bool
-    @Binding var userAuthenticated : Bool
+    @ObservedObject var signupViewModel : SignupViewModel
+    var signUpCompletion : ((User?) -> Void)
+    
+    init(authService: AuthenticationService, signUpCompletion : @escaping ((User?) -> Void)) {
+        _signupViewModel = .init(wrappedValue: SignupViewModel(authService: authService))
+        self.signUpCompletion = signUpCompletion
+    }
     var body: some View {
         VStack{
             Text("Provide your details")
@@ -47,13 +51,8 @@ struct SignupView: View {
                     if let user = await signupViewModel.signup(){
                         //user created and authenticated
                         await MainActor.run(){
-                            withAnimation {
-                                isPresented = false
-                            } completion: {
-                                userAuthenticated = true
-                            }
+                            signUpCompletion(user)
                         }
-                        
                     }
                 }
                 
@@ -72,6 +71,11 @@ struct SignupView: View {
                 signupViewModel.password.isEmpty || signupViewModel.confirmPassword.isEmpty
             )
         }.padding()
+            .overlay {
+                if signupViewModel.isLoading{
+                    OverlayMessageView(message: "Registering...", showProgress: true)
+                }
+            }
     }
 }
 

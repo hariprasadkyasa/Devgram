@@ -10,14 +10,19 @@ import SwiftUI
 
 struct PostsView : View {
     @StateObject var postsViewModel: PostsViewModel
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @State var userSessionManager: UserSessionManager
+    
+    init(userSessionManager: UserSessionManager, postsService: PostsService){
+        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
+        _userSessionManager = .init(wrappedValue: userSessionManager)
+    }
     var body: some View {
         VStack{
             ScrollView{
                 LazyVStack(spacing: 30){
                     ForEach(0..<postsViewModel.posts.count, id: \.self){ index in
                         let post = postsViewModel.posts[index]
-                        if let currentUser = loginViewModel.currentUser{
+                        if let currentUser = userSessionManager.getCurrentUser(){
                             PostCellView(post: post, liked: post.likedby.contains(currentUser.userId), likedCount: post.likedby.count){ liked in
                                 //like button tapped
                                 Task{

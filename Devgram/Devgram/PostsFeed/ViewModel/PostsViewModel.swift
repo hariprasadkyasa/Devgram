@@ -7,12 +7,16 @@
 
 import Foundation
 class PostsViewModel: ObservableObject{
-    private let postsService = PostsServiceManager()
+    private let postsService : PostsService
     @Published var posts : [Post] = [Post]()
     @Published var displayOverlayMessage : Bool = false
     @Published var isLoadingData : Bool = false
     var overlayMessage : String = ""
     var offset : Int = 0
+    
+    init(postsService : PostsService){
+        self.postsService = postsService
+    }
     
     @MainActor
     func loadPosts() async throws{
