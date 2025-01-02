@@ -35,7 +35,7 @@ class AuthenticationServiceManager: NetworkConnector, AuthenticationService{
             let user = try await loadRequest(type: User.self, endpoint: AuthEndPoint.getCurrentUserProfile(token: token))
             return user
         }else{
-            throw AuthError.invalidToken
+            throw ConnectionError.invalidToken
         }
     }
     
@@ -43,6 +43,8 @@ class AuthenticationServiceManager: NetworkConnector, AuthenticationService{
         if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey) {
             _ = try await loadRequest(endpoint: AuthEndPoint.logout(token: token))
             _ = KeychainStorage.delete(key: Constants.Keys.userTokenKey)
+        }else{
+            throw ConnectionError.invalidToken
         }
         return true
     }

@@ -6,16 +6,6 @@
 //
 
 import Foundation
-enum AuthError: Error {
-    case tokenSaveFailed
-    case userAlreadyExists
-    case invalidCredentials
-    case invalidToken
-    case tokenExpired
-    case invalidResponseCode(Int)
-    case invalidResponse
-}
-
 protocol AuthenticationService{
     func createUser(userDetails : Encodable) async throws -> User
     func loginUser(username: String, password: String) async throws -> User?
