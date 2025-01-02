@@ -18,10 +18,18 @@
 			remoteGlobalIDString = 115CE5BA2D1DFBB500ED678D;
 			remoteInfo = Devgram;
 		};
+		1140C32D2D273BE800E707CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 115CE5B32D1DFBB500ED678D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 115CE5BA2D1DFBB500ED678D;
+			remoteInfo = Devgram;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1140C2352D26E39F00E707CE /* DevgramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevgramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1140C3272D273BE800E707CE /* DevgramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevgramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		115CE5BB2D1DFBB500ED678D /* Devgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		115CE5FC2D1E098C00ED678D /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -30,6 +38,11 @@
 		1140C2362D26E39F00E707CE /* DevgramTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = DevgramTests;
+			sourceTree = "<group>";
+		};
+		1140C3282D273BE800E707CE /* DevgramUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DevgramUITests;
 			sourceTree = "<group>";
 		};
 		115CE5BD2D1DFBB500ED678D /* Devgram */ = {
@@ -41,6 +54,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		1140C2322D26E39F00E707CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1140C3242D273BE800E707CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -63,6 +83,7 @@
 				115CE5FC2D1E098C00ED678D /* Notes */,
 				115CE5BD2D1DFBB500ED678D /* Devgram */,
 				1140C2362D26E39F00E707CE /* DevgramTests */,
+				1140C3282D273BE800E707CE /* DevgramUITests */,
 				115CE5BC2D1DFBB500ED678D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +93,7 @@
 			children = (
 				115CE5BB2D1DFBB500ED678D /* Devgram.app */,
 				1140C2352D26E39F00E707CE /* DevgramTests.xctest */,
+				1140C3272D273BE800E707CE /* DevgramUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,6 +123,29 @@
 			productName = DevgramTests;
 			productReference = 1140C2352D26E39F00E707CE /* DevgramTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1140C3262D273BE800E707CE /* DevgramUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1140C3312D273BE800E707CE /* Build configuration list for PBXNativeTarget "DevgramUITests" */;
+			buildPhases = (
+				1140C3232D273BE800E707CE /* Sources */,
+				1140C3242D273BE800E707CE /* Frameworks */,
+				1140C3252D273BE800E707CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1140C32E2D273BE800E707CE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1140C3282D273BE800E707CE /* DevgramUITests */,
+			);
+			name = DevgramUITests;
+			packageProductDependencies = (
+			);
+			productName = DevgramUITests;
+			productReference = 1140C3272D273BE800E707CE /* DevgramUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		115CE5BA2D1DFBB500ED678D /* Devgram */ = {
 			isa = PBXNativeTarget;
@@ -138,6 +183,10 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 115CE5BA2D1DFBB500ED678D;
 					};
+					1140C3262D273BE800E707CE = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 115CE5BA2D1DFBB500ED678D;
+					};
 					115CE5BA2D1DFBB500ED678D = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -159,12 +208,20 @@
 			targets = (
 				115CE5BA2D1DFBB500ED678D /* Devgram */,
 				1140C2342D26E39F00E707CE /* DevgramTests */,
+				1140C3262D273BE800E707CE /* DevgramUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1140C2332D26E39F00E707CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1140C3252D273BE800E707CE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -188,6 +245,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1140C3232D273BE800E707CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		115CE5B72D1DFBB500ED678D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,6 +267,11 @@
 			isa = PBXTargetDependency;
 			target = 115CE5BA2D1DFBB500ED678D /* Devgram */;
 			targetProxy = 1140C2392D26E39F00E707CE /* PBXContainerItemProxy */;
+		};
+		1140C32E2D273BE800E707CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 115CE5BA2D1DFBB500ED678D /* Devgram */;
+			targetProxy = 1140C32D2D273BE800E707CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -238,6 +307,38 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Devgram.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Devgram";
+			};
+			name = Release;
+		};
+		1140C32F2D273BE800E707CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devpods.devgram.DevgramUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Devgram;
+			};
+			name = Debug;
+		};
+		1140C3302D273BE800E707CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.devpods.devgram.DevgramUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Devgram;
 			};
 			name = Release;
 		};
@@ -424,6 +525,15 @@
 			buildConfigurations = (
 				1140C23B2D26E39F00E707CE /* Debug */,
 				1140C23C2D26E39F00E707CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1140C3312D273BE800E707CE /* Build configuration list for PBXNativeTarget "DevgramUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1140C32F2D273BE800E707CE /* Debug */,
+				1140C3302D273BE800E707CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -57,6 +57,7 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.blue)
                             .cornerRadius(10)
+                            .accessibilityIdentifier("Login_Button")
                             
                     }.disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
                     
