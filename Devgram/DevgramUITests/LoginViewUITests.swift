@@ -12,6 +12,7 @@ final class LoginViewUITests: XCTestCase {
     let app = XCUIApplication()
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments.append("--disableAutoLogin")
     }
 
     override func tearDownWithError() throws {

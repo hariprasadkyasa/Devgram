@@ -27,6 +27,10 @@ final class MainTabViewUITests: XCTestCase {
             let addPostButton = tabBar.buttons["Add"]
             addPostButton.tap()
             XCTAssertTrue(addPostButton.isSelected)
+            let label = app.staticTexts["Create Post"]
+            XCTAssertTrue(label.exists)
+            let postButton = app.buttons["Post"]
+            XCTAssertTrue(postButton.exists)
             sleep(2)
             
             let profileButton = tabBar.buttons["Selfie"]

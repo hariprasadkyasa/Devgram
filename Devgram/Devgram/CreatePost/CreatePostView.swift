@@ -50,6 +50,7 @@ struct CreatePostView: View {
                 .frame(height: 300)
                 .cornerRadius(8.0)
                 .border(Color.gray, width: 1)
+                .accessibilityIdentifier("NewPost_Editor")
             Picker("Post type", selection: $selectedPostType) {
                 ForEach(0..<viewModel.postTypes.count, id: \.self) { index in
                     let postType = viewModel.postTypes[index]
