@@ -67,7 +67,7 @@ struct LoginView: View {
                     }
                 }
                 
-                NavigationLink("", destination: MainTabView().environmentObject(loginViewModel), isActive: $loginViewModel.userAuthenticated)
+                NavigationLink("", destination: MainTabView(userSessionManager: loginViewModel).environmentObject(loginViewModel), isActive: $loginViewModel.userAuthenticated)
             }
             .onAppear {
                 Task { await loginViewModel.checkIfUserAuthenticated() }

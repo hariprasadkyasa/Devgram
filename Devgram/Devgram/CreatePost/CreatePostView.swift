@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreatePostView: View {
     @StateObject var createPostViewModel = CreatePostViewModel()
-    @EnvironmentObject var loginViewModel : LoginViewModel
+    @State var userSessionManager : UserSessionManager
     @State private var selectedPostType = 0
     @Binding var currentSelectedTab: Tab
     
@@ -53,7 +53,7 @@ struct CreatePostView: View {
                 
             Button {
                 Task{ @MainActor in
-                    if let currentUser = loginViewModel.currentUser {
+                    if let currentUser = userSessionManager.getCurrentUser() {
                         try await createPostViewModel.createPost(type: selectedPostType, for: currentUser)
                         //display an overlay that post is shared
                         createPostViewModel.displayOverlayMessage = true
@@ -103,5 +103,5 @@ struct CreatePostView: View {
 }
 
 #Preview {
-    CreatePostView( currentSelectedTab: .constant(Tab.createPost))
+    CreatePostView(userSessionManager: LoginViewModel(), currentSelectedTab: .constant(Tab.createPost))
 }

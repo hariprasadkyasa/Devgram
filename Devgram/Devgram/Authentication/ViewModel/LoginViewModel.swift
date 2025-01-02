@@ -59,20 +59,29 @@ class LoginViewModel : ObservableObject {
             print("Error while getting user profile: \(error)")
         }
     }
+}
+
+extension LoginViewModel : UserSessionManager{
+    func isAuthneticated() -> Bool {
+        return userAuthenticated
+    }
+    
+    func getCurrentUser() -> User? {
+        return currentUser
+    }
     
     @MainActor
-    func logout() async -> Bool{
+    func logout() async{
         do{
             let result = try await authService.logout()
             if result{
                 self.currentUser = nil
                 self.userAuthenticated = false
-                return true
             }
         }
         catch{
             print("Error while logging out: \(error)")
         }
-        return false
     }
+    
 }

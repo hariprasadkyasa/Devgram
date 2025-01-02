@@ -9,9 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject var viewModel: PostGridViewModel = PostGridViewModel()
-    @EnvironmentObject var loginViewModel: LoginViewModel
-
-
+    @State var userSessionManager: UserSessionManager
     var body: some View {
         VStack{
             ScrollView {
@@ -43,7 +41,7 @@ struct ProfileView: View {
     
     func getPosts(){
         Task {
-            if let currentUser = loginViewModel.currentUser {
+            if let currentUser = userSessionManager.getCurrentUser() {
                 try await viewModel.fetchUserPosts(userId: currentUser.userId)
             }
         }
@@ -51,6 +49,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
-        .environmentObject(LoginViewModel())
+    ProfileView(userSessionManager : LoginViewModel())
 }
