@@ -17,9 +17,12 @@ class MockAuthenticationService: AuthenticationService {
     func createUser(userDetails : Encodable) async throws -> User{
         //check if the provided details are not empty and create new user
         if let details = userDetails as? [String:Encodable]{
-            let username = details["username"] as? String
-            let password = details["password"] as? String
+            let username = details["name"] as? String
             let email = details["email"] as? String
+            //if email is 'abusive@xyz.com' throw error for testing
+            if email == "abusive@xyz.com"{
+                throw ConnectionError.invalidCredentials
+            }
             let user = User(userId: 0, name: username!, email: email!)
             return user
         }
