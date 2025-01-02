@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LoginViewModel : ObservableObject {
+class LoginViewModel : BaseViewModel {
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var userAuthenticated = false
@@ -15,7 +15,6 @@ class LoginViewModel : ObservableObject {
     @Published var gettingUserAuthenticationStatus = false
     private var authService : AuthenticationService
     @Published var currentUser : User?
-    
     init(authService: AuthenticationService){
         self.authService = authService
     }
@@ -31,10 +30,11 @@ class LoginViewModel : ObservableObject {
                 password = ""
                 print("The current user data \(user)")
             }
-            authenticationInProgress = false
         }catch {
             print("The error while login:", error.localizedDescription)
+            displayError(error: error, heading: Constants.ErrorMessages.signInErrorHeading)
         }
+        authenticationInProgress = false
         
     }
     
@@ -49,7 +49,8 @@ class LoginViewModel : ObservableObject {
             print("The authentication status: \(userAuthenticated)")
         }
         catch{
-            print("The error while login:", error.localizedDescription)
+            print("The error while checking user session:", error.localizedDescription)
+            displayError(error: error, heading: Constants.ErrorMessages.errorGettingAuthStatusHeading)
         }
         gettingUserAuthenticationStatus = false
     }
@@ -61,8 +62,11 @@ class LoginViewModel : ObservableObject {
         }
         catch{
             print("Error while getting user profile: \(error)")
+            displayError(error: error, heading: Constants.ErrorMessages.signInErrorHeading)
         }
     }
+    
+    
 }
 
 extension LoginViewModel : UserSessionManager{
@@ -85,6 +89,7 @@ extension LoginViewModel : UserSessionManager{
         }
         catch{
             print("Error while logging out: \(error)")
+            displayError(error: error, heading: Constants.ErrorMessages.signOutErrorHeading)
         }
     }
     

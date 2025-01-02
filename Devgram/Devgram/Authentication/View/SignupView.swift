@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SignupView: View {
-    @ObservedObject var signupViewModel : SignupViewModel
+    @ObservedObject var viewModel : SignupViewModel
     var signUpCompletion : ((User?) -> Void)
     
     init(authService: AuthenticationService, signUpCompletion : @escaping ((User?) -> Void)) {
-        _signupViewModel = .init(wrappedValue: SignupViewModel(authService: authService))
+        _viewModel = .init(wrappedValue: SignupViewModel(authService: authService))
         self.signUpCompletion = signUpCompletion
     }
     var body: some View {
@@ -21,14 +21,14 @@ struct SignupView: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.bottom, 30)
-            TextField("Name", text: $signupViewModel.username)
+            TextField("Name", text: $viewModel.username)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
                 .autocapitalization(.none)
                 .padding()
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
-            TextField("Email", text: $signupViewModel.email)
+            TextField("Email", text: $viewModel.email)
                 .keyboardType(.emailAddress)
                 .textContentType(.emailAddress)
                 .autocapitalization(.none)
@@ -36,11 +36,13 @@ struct SignupView: View {
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
             
-            SecureField("Password", text: $signupViewModel.password)
+            SecureField("Password", text: $viewModel.password)
+                .disableAutocorrection(true)
                 .padding()
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
-            SecureField("Confirm password", text: $signupViewModel.confirmPassword)
+            SecureField("Confirm password", text: $viewModel.confirmPassword)
+                .disableAutocorrection(true)
                 .padding()
                 .background(Color(UIColor.systemGray6))
                 .cornerRadius(10)
@@ -48,7 +50,7 @@ struct SignupView: View {
                 .frame(height: 30)
             Button {
                 Task{
-                    if let user = await signupViewModel.signup(){
+                    if let user = await viewModel.signup(){
                         //user created and authenticated
                         await MainActor.run(){
                             signUpCompletion(user)
@@ -66,15 +68,20 @@ struct SignupView: View {
                     .cornerRadius(10)
                 
             }.disabled(
-                signupViewModel.username.isEmpty ||
-                signupViewModel.email.isEmpty ||
-                signupViewModel.password.isEmpty || signupViewModel.confirmPassword.isEmpty
+                viewModel.username.isEmpty ||
+                viewModel.email.isEmpty ||
+                viewModel.password.isEmpty || viewModel.confirmPassword.isEmpty
             )
         }.padding()
             .overlay {
-                if signupViewModel.isLoading{
+                if viewModel.isLoading{
                     OverlayMessageView(message: "Registering...", showProgress: true)
                 }
+            }
+            .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.messageToDisplay.message)
             }
     }
 }

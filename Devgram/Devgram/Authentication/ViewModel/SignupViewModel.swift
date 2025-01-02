@@ -6,12 +6,11 @@
 //
 
 import Foundation
-class SignupViewModel: ObservableObject {
+class SignupViewModel: BaseViewModel {
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""
     @Published var email: String = ""
-    @Published var errorMessage: String?
     @Published var isLoading: Bool = false
     private let authService: AuthenticationService
     
@@ -22,7 +21,8 @@ class SignupViewModel: ObservableObject {
     @MainActor
     func signup() async -> User?{
         guard !username.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !email.isEmpty && password == confirmPassword else {
-            errorMessage = "Make sure all details are correct"
+            messageToDisplay = Message(heading:Constants.ErrorMessages.invalidSignupDetailsHeading, message:Constants.ErrorMessages.invalidSignupDetailsMessage )
+            displayMessage = true
             return nil
         }
         do{
@@ -32,6 +32,7 @@ class SignupViewModel: ObservableObject {
             return try await authService.loginUser(username: username, password: password)
         }catch{
             print("Error signing up: \(error)")
+            
         }
         isLoading = false
         return nil

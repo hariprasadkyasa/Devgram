@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 enum Tab: Int, Hashable {
     case posts
     case createPost

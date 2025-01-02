@@ -9,33 +9,29 @@ import Foundation
 import SwiftUI
 
 struct PostsView : View {
-    @StateObject var postsViewModel: PostsViewModel
+    @StateObject var viewModel: PostsViewModel
     @State var userSessionManager: UserSessionManager
     
     init(userSessionManager: UserSessionManager, postsService: PostsService){
-        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
+        _viewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
     }
     var body: some View {
         VStack{
             ScrollView{
                 LazyVStack(spacing: 30){
-                    ForEach(0..<postsViewModel.posts.count, id: \.self){ index in
-                        let post = postsViewModel.posts[index]
+                    ForEach(0..<viewModel.posts.count, id: \.self){ index in
+                        let post = viewModel.posts[index]
                         if let currentUser = userSessionManager.getCurrentUser(){
                             PostCellView(post: post, liked: post.likedby.contains(currentUser.userId), likedCount: post.likedby.count){ liked in
                                 //like button tapped
                                 Task{
-                                    let success = try await postsViewModel.updateLike(post: post, liked: liked, user: currentUser)
-                                    if !success{
-                                        postsViewModel.overlayMessage = "Error updating like!."
-                                        postsViewModel.displayOverlayMessage = true
-                                    }
+                                    await viewModel.updateLike(post: post, liked: liked, user: currentUser)
                                 }
                             }
                             .onAppear{
-                                if index == postsViewModel.posts.count - 1{
-                                    Task {try await postsViewModel.loadNextSetOfPosts()}
+                                if index == viewModel.posts.count - 1{
+                                    Task {try await viewModel.loadNextSetOfPosts()}
                                 }
                             }
                             
@@ -43,34 +39,32 @@ struct PostsView : View {
 
                     }
                 }
-                if postsViewModel.posts.isEmpty{
-                    Text("No posts to show!")
+                if viewModel.posts.isEmpty{
+                    Text(Constants.Labels.NoPostsInFeedMessage)
                 }
-                if postsViewModel.isLoadingData{
+                if viewModel.isLoadingData{
                     ProgressView()
                 }
             }.refreshable {
                 Task {
-                    try await postsViewModel.loadPosts()
+                    await viewModel.loadPosts()
                 }
             }
         
         }.onAppear{
             Task{
-                do {
-                    try await postsViewModel.loadPosts()
-                }catch{
-                    print("Some error occured retrieving posts!")
-                }
-                
+                await viewModel.loadPosts()
             }
-            
         }
         .overlay {
-            if postsViewModel.displayOverlayMessage{
-                OverlayMessageView(message: postsViewModel.overlayMessage, indicateError: true)
+            if viewModel.displayOverlayMessage{
+                OverlayMessageView(message: viewModel.overlayMessage, indicateError: true)
             }
-            
+        }
+        .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.messageToDisplay.message)
         }
         
     }
