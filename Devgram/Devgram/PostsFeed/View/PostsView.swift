@@ -9,8 +9,13 @@ import Foundation
 import SwiftUI
 
 struct PostsView : View {
-    @StateObject var postsViewModel: PostsViewModel = PostsViewModel()
+    @StateObject var postsViewModel: PostsViewModel
     @State var userSessionManager: UserSessionManager
+    
+    init(userSessionManager: UserSessionManager){
+        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: PostsServiceManager()))
+        _userSessionManager = .init(wrappedValue: userSessionManager)
+    }
     var body: some View {
         VStack{
             ScrollView{

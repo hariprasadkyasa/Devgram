@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct CreatePostView: View {
-    @StateObject var createPostViewModel = CreatePostViewModel()
+    @StateObject var createPostViewModel : CreatePostViewModel
     @State var userSessionManager : UserSessionManager
     @State private var selectedPostType = 0
     @Binding var currentSelectedTab: Tab
+    
+    init(userSessionManager: UserSessionManager, currentSelectedTab: Binding<Tab>) {
+        _createPostViewModel = .init(wrappedValue: CreatePostViewModel(postsService: PostsServiceManager()))
+        _userSessionManager = .init(wrappedValue: userSessionManager)
+        _currentSelectedTab = .init(projectedValue: currentSelectedTab)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20){

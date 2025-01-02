@@ -6,10 +6,9 @@
 //
 
 import Foundation
-class PostsServiceManager : NetworkConnector {
+class PostsServiceManager : NetworkConnector, PostsService {
     
-    
-    func getPosts(quantity: Int = 10, offset: Int = 0, userId: Int?) async throws -> [Post]{
+    func getPosts(quantity: Int, offset: Int, userId: Int?) async throws -> [Post]{
         var posts = [Post]()
         if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){
             if let userId{
@@ -20,16 +19,7 @@ class PostsServiceManager : NetworkConnector {
         }
         return posts
     }
-    
-//    func getPosts(quantity: Int = 10, offset: Int = 0) async throws -> [Post]{
-//        return [
-//            Post(id: 0, username: "Hariprasad", userid: 0, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", likes: 0, posttype: "code"),
-//            Post(id: 1, username: "Hari", userid: 1, content: "let testInstance = Test()\ntestInstance.testMethod()\nprint(testInstance.testProperty)\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()\ntestInstance.testMethod()", likes: 0, posttype: "code"),
-//            Post(id: 2, username: "Raghu", userid: 2, content: "Normal text post", likes: 0, posttype: "text"),
-//            Post(id: 3, username: "Prasad", userid: 3, content: "www.developer.apple.com", likes: 0, posttype: "link"),
-//        ]
-//    }
-    
+        
     func createPost(post: Post) async throws -> Bool{
         do {
             if let token = KeychainStorage.retrieve(key: Constants.Keys.userTokenKey){

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PostGridView: View {
+    @EnvironmentObject var viewModel : PostsViewModel
     let posts: [Post]
 
     private let gridItems: [GridItem] = [
@@ -27,6 +28,7 @@ struct PostGridView: View {
                     PostContentView(post: post, displayMode: .displayModeProfile)
                 }
             }
+            
         }
     }
 }

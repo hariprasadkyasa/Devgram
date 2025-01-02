@@ -8,7 +8,8 @@
 import Foundation
 
 protocol PostsService {
-    func getPosts(quantity: Int, offset: Int) async throws -> [Post]
+    func getPosts(quantity: Int, offset: Int, userId: Int?) async throws -> [Post]
     func createPost(post: Post) async throws -> Bool
+    func updatePost(post: Post) async throws -> Bool
 }
 
