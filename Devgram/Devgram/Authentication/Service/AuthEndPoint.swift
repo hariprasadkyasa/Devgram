@@ -60,7 +60,9 @@ extension AuthEndPoint: NetworkEndPoint {
         case .login, .createUser:
             return commonHeaders
         case .checkUserSession(token : let token), .logout(token : let token), .getCurrentUserProfile(token : let token):
-            return ["user-token": token, "Content-Type": "application/json"]
+            var headers = commonHeaders
+            headers["user-token"] = token
+            return headers
         }
     }
     

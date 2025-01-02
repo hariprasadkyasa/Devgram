@@ -6,10 +6,10 @@
 //
 
 import Foundation
-class ProfileViewModel: ObservableObject {
+class ProfileViewModel: BaseViewModel {
     private let postsService : PostsService
-    @Published var posts = [Post]()
-    @Published var fetchingData = false
+    @Published var posts : [Post] = [Post]()
+    @Published var noPostsMessage = Constants.Labels.NoPostsInProfileMessage
 
     init(postsService: PostsService) {
         self.postsService = postsService
@@ -20,25 +20,26 @@ class ProfileViewModel: ObservableObject {
     }
 
     @MainActor
-    func fetchUserPosts(userId: Int) async throws {
+    func fetchUserPosts(userId: Int) async {
         do {
-            fetchingData = true
+            isLoading = true
             posts = try await postsService.getPosts(quantity: 20, offset: 0, userId: userId)
-            fetchingData = false
-            print("Done fetching user posts!")
         }catch{
             print("Error fetching user posts!", error)
+            displayError(error: error, heading: Constants.ErrorMessages.errorFetchingPostsHeading)
+            noPostsMessage = Constants.ErrorMessages.errorFetchingPostsHeading
         }
+        isLoading = false
     }
-    
-    func fetchMorePosts(userId: Int) async throws {
+    @MainActor
+    func fetchNextPosts(userId: Int) async {
         do {
-            fetchingData = true
+            isLoading = true
             posts += try await postsService.getPosts(quantity: 20, offset: postsCount-1, userId: userId)
-            fetchingData = false
-            print("Done fetching more posts!")
+            isLoading = false
         }catch{
             print("Error fetching more posts!", error)
+            displayError(error: error, heading: Constants.ErrorMessages.errorFetchingPostsHeading)
         }
     }
 }

@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject var loginViewModel : LoginViewModel
+    @StateObject var viewModel : LoginViewModel
     @State var postsService : PostsService
     @State var authService : AuthenticationService
     @State var displaySignUpView : Bool = false
     
     init(authService: AuthenticationService, postsService: PostsService) {
-        _loginViewModel = .init(wrappedValue: LoginViewModel(authService: authService))
+        _viewModel = .init(wrappedValue: LoginViewModel(authService: authService))
         _postsService = .init(wrappedValue: postsService)
         _authService = .init(wrappedValue: authService)
     }
@@ -26,11 +26,11 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
                 
-                if loginViewModel.gettingUserAuthenticationStatus {
+                if viewModel.gettingUserAuthenticationStatus {
                     ProgressView()
                 }else{
                     // Email Field
-                    TextField("Email", text: $loginViewModel.username)
+                    TextField("Email", text: $viewModel.username)
                         .keyboardType(.emailAddress)
                         .textContentType(.emailAddress)
                         .autocapitalization(.none)
@@ -38,7 +38,7 @@ struct LoginView: View {
                         .background(Color(UIColor.systemGray6))
                         .cornerRadius(10)
                         
-                    SecureField("Password", text: $loginViewModel.password)
+                    SecureField("Password", text: $viewModel.password)
                                     .padding()
                                     .background(Color(UIColor.systemGray6))
                                     .cornerRadius(10)
@@ -46,7 +46,7 @@ struct LoginView: View {
                         .frame(height: 20)
                     Button {
                         Task{
-                            await loginViewModel.login()
+                            await viewModel.login()
                         }
                         
                     } label: {
@@ -58,7 +58,7 @@ struct LoginView: View {
                             .background(Color.blue)
                             .cornerRadius(10)
                             
-                    }.disabled(loginViewModel.username.isEmpty || loginViewModel.password.isEmpty)
+                    }.disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
                     
                     HStack{
                         Text("New user?")
@@ -75,29 +75,35 @@ struct LoginView: View {
                     }
                 }
                 
-                NavigationLink("", destination: MainTabView(userSessionManager: loginViewModel, postsService: postsService), isActive: $loginViewModel.userAuthenticated)
+                NavigationLink("", destination: MainTabView(userSessionManager: viewModel, postsService: postsService), isActive: $viewModel.userAuthenticated)
             }
             .onAppear {
-                Task { await loginViewModel.checkIfUserAuthenticated() }
+                Task { await viewModel.checkIfUserAuthenticated() }
             }
             .padding()
             .sheet(isPresented: $displaySignUpView) {
                 SignupView(authService: authService){ user in
                     if let user{
-                        loginViewModel.currentUser = user
+                        viewModel.currentUser = user
                         withAnimation {
                             displaySignUpView = false
                         } completion: {
-                            loginViewModel.userAuthenticated = true
+                            viewModel.userAuthenticated = true
                         }
                     }
                 }
             }
             .overlay {
-                if loginViewModel.authenticationInProgress{
+                if viewModel.authenticationInProgress{
                     OverlayMessageView(message: "Signing you in...", showProgress: true)
                 }
+            }            
+            .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(viewModel.messageToDisplay.message)
             }
+
         }
         
     }

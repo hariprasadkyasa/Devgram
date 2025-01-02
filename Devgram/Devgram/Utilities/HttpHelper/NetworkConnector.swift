@@ -24,7 +24,7 @@ extension NetworkConnector {
     
     func loadRequest(endpoint : NetworkEndPoint) async throws -> Data{
         guard let url = endpoint.url else {
-            throw ConnectionError.requestFailed(description: "Invalid Endpoint")
+            throw ConnectionError.invalidURL
         }
         //configure request from the endpoint
         var urlRequest = URLRequest(url:url)

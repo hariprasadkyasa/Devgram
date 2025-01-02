@@ -53,7 +53,9 @@ extension PostsEndPoint: NetworkEndPoint {
         case .getPosts, .getUserPosts:
             return commonHeaders
         case .createPost(post:_, token: let token), .updatePost(post:_, token: let token):
-            return ["user-token": token, "Content-Type": "application/json"]
+            var headers = commonHeaders
+            headers["user-token"] = token
+            return headers
         }
     }
     

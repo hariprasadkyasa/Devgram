@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct PostGridView: View {
-    @EnvironmentObject var viewModel : PostsViewModel
-    let posts: [Post]
+    @EnvironmentObject var viewModel : ProfileViewModel
 
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
@@ -21,18 +20,14 @@ struct PostGridView: View {
 
     var body: some View {
         LazyVGrid(columns: gridItems, spacing: 1) {
-            ForEach(posts, id: \.id) { post in
-                NavigationLink {
-                    //
-                } label: {
-                    PostContentView(post: post, displayMode: .displayModeProfile)
-                }
-            }
+            
+            
+            
             
         }
     }
 }
 
 #Preview {
-    PostGridView(posts: [Post]())
+    PostGridView()
 }

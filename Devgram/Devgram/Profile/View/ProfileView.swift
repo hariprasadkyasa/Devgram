@@ -16,6 +16,13 @@ struct ProfileView: View {
         _userSessionManager = .init(wrappedValue: userSessionManager)
     }
     
+    private let gridItems: [GridItem] = [
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1),
+        .init(.flexible(), spacing: 1),
+    ]
+    var imageDimension = (UIScreen.main.bounds.width / 3) - 1
+    
     var body: some View {
         VStack{
             ScrollView {
@@ -23,12 +30,25 @@ struct ProfileView: View {
                 ProfileHeaderView(userSessionManager: userSessionManager)
                     .environmentObject(viewModel)
                 // post grid view
-                PostGridView(posts: viewModel.posts)
-                    .environmentObject(viewModel)
-                if viewModel.fetchingData{
+                LazyVGrid(columns: gridItems, spacing: 1) {
+                    ForEach(0..<viewModel.posts.count, id: \.self){ index in
+                        let post = viewModel.posts[index]
+                        PostContentView(post: post, displayMode: .displayModeProfile)
+                            .onAppear{
+                                if index == viewModel.posts.count - 1{
+                                    if !viewModel.isLoading{
+                                        if let currentUser = userSessionManager.getCurrentUser(){
+                                            Task{ await viewModel.fetchNextPosts(userId: currentUser.userId) }
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+                if viewModel.isLoading{
                     ProgressView()
                 }else if viewModel.postsCount == 0{
-                    Text("You have not posted anything yet!")
+                    Text(viewModel.noPostsMessage)
                 }
             }.padding(.vertical)
             .refreshable {
@@ -36,20 +56,23 @@ struct ProfileView: View {
             }
             .environmentObject(viewModel)
             .onAppear {
-                print("On appear of Profile")
-                if !viewModel.fetchingData{
+                if !viewModel.isLoading{
                     getPosts()
                 }
                 
             }
-        }.navigationBarTitle("Profile")
-        
+        }
+        .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.messageToDisplay.message)
+        }
     }
     
     func getPosts(){
         Task {
             if let currentUser = userSessionManager.getCurrentUser() {
-                try await viewModel.fetchUserPosts(userId: currentUser.userId)
+                await viewModel.fetchUserPosts(userId: currentUser.userId)
             }
         }
     }

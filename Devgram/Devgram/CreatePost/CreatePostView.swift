@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CreatePostView: View {
-    @StateObject var createPostViewModel : CreatePostViewModel
+    @StateObject var viewModel : CreatePostViewModel
     @State var userSessionManager : UserSessionManager
     @State private var selectedPostType = 0
     @Binding var currentSelectedTab: Tab
     
     init(userSessionManager: UserSessionManager,postsService: PostsService, currentSelectedTab: Binding<Tab>) {
-        _createPostViewModel = .init(wrappedValue: CreatePostViewModel(postsService: postsService))
+        _viewModel = .init(wrappedValue: CreatePostViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
         _currentSelectedTab = .init(projectedValue: currentSelectedTab)
     }
@@ -27,7 +27,7 @@ struct CreatePostView: View {
                 Spacer()
                 Button {
                     if let clipboardText = UIPasteboard.general.string {
-                        createPostViewModel.postContent = clipboardText
+                        viewModel.postContent = clipboardText
                     }
                 } label: {
                     Text("Paste")
@@ -40,7 +40,7 @@ struct CreatePostView: View {
 
             }
             
-            TextEditor(text: $createPostViewModel.postContent)
+            TextEditor(text: $viewModel.postContent)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(selectedPostType == 1 ? .never : .sentences)
                 .scrollContentBackground(.hidden)
@@ -51,8 +51,8 @@ struct CreatePostView: View {
                 .cornerRadius(8.0)
                 .border(Color.gray, width: 1)
             Picker("Post type", selection: $selectedPostType) {
-                ForEach(0..<createPostViewModel.postTypes.count, id: \.self) { index in
-                    let postType = createPostViewModel.postTypes[index]
+                ForEach(0..<viewModel.postTypes.count, id: \.self) { index in
+                    let postType = viewModel.postTypes[index]
                     Text(postType).tag(index)
                 }
             }.pickerStyle(.segmented)
@@ -60,14 +60,19 @@ struct CreatePostView: View {
             Button {
                 Task{ @MainActor in
                     if let currentUser = userSessionManager.getCurrentUser() {
-                        try await createPostViewModel.createPost(type: selectedPostType, for: currentUser)
-                        //display an overlay that post is shared
-                        createPostViewModel.displayOverlayMessage = true
-                        //dismiss after 2 seconds
-                        try? await Task.sleep(nanoseconds: 1_000_000_000)
-                        createPostViewModel.displayOverlayMessage = false
-                        //navigate to posts view
-                        self.currentSelectedTab = Tab.posts
+                        do {
+                            try await viewModel.createPost(type: selectedPostType, for: currentUser)
+                            //display an overlay that post is shared
+                            viewModel.displayOverlayMessage = true
+                            //dismiss after 2 seconds
+                            try? await Task.sleep(nanoseconds: 1_000_000_000)
+                            viewModel.displayOverlayMessage = false
+                            //navigate to posts view
+                            self.currentSelectedTab = Tab.posts
+                        }catch{
+                            print("Error creating post \(error)")
+                            viewModel.displayError(error: error, heading: Constants.ErrorMessages.errorCreatingPostHeading)
+                        }
                     }
                 }
                 
@@ -79,16 +84,20 @@ struct CreatePostView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(10)
-            }.disabled(createPostViewModel.postContent.isEmpty)
+            }.disabled(viewModel.postContent.isEmpty)
             
         }
         .navigationBarTitle("New Post")
         .padding()
         .overlay {
-            if createPostViewModel.displayOverlayMessage {
-                OverlayMessageView(message: "Post shared.", indicateSuccess: true)
+            if viewModel.displayOverlayMessage {
+                OverlayMessageView(message: "Post shared", indicateSuccess: true)
             }
-            
+        }
+        .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.messageToDisplay.message)
         }
     }
     

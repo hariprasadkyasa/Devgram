@@ -7,20 +7,20 @@
 
 import Foundation
 enum ConnectionError: Error {
-    case invalidData
-    case jsonParsingFailure
+    case invalidRequest
+    case parsingFailure
     case requestFailed(description: String)
     case invalidURL
     case invalidStatusCode(statusCode: Int)
     case unknownError(error:Error)
-    var customDescription: String {
+    var localizedDescription: String {
         switch self {
-            case .invalidData: return "Invalid data"
-            case .jsonParsingFailure: return "Failed to parse JSON"
+            case .invalidRequest: return "Invalid data"
+            case .parsingFailure: return "Failed to parse JSON"
             case let .requestFailed(description): return "Request failed \(description)"
             case .invalidURL: return "Invalid URL"
-            case let .invalidStatusCode(statusCode): return "Invalid Status Code \(statusCode) from server. Rate limit for calling the API is excceded."
-            case let .unknownError(error): return "Rate limit for API is exceeded \(error)"
+            case let .invalidStatusCode(statusCode): return "Received Status Code \(statusCode) from server. Make sure you provide valid details."
+            case let .unknownError(error): return "A network error occurred: \(error.localizedDescription)"
         }
     }
     
