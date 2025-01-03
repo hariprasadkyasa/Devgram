@@ -14,35 +14,10 @@ struct PostCellView: View {
     let onLikeTapped: (Bool) -> Void
     var body: some View {
         VStack(alignment: .leading){
-            HStack{
-                Image(systemName: "person.crop.circle")
-                    .scaleEffect(1.2)
-                Text(post.username)
-                    .font(.headline)
-                    .fontWeight(.semibold)
-            }.padding(.horizontal)
-            
+            postCreatorSection
             PostContentView(post: post)
-            
-            HStack{
-                Button {
-                    didTapLike()
-                } label: {
-                    Image(systemName:  liked ? "hands.clap.fill" : "hands.clap")
-                        .foregroundStyle(liked ? Color.red : Color.black)
-                        .scaleEffect(1.2)
-                }
-                Text("\(likedCount)")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                Spacer()
-            }.padding(.horizontal)
-            
-            HStack{
-                let timePosted = getDisplayTextForPostedTime(post: post)
-                Text(timePosted)
-                Spacer()
-            }.padding(.horizontal)
+            postInteractionsSection
+            postedTimeSection
         }
     }
 
@@ -72,6 +47,42 @@ struct PostCellView: View {
     }
 }
 
+extension PostCellView {
+    var postCreatorSection: some View {
+        HStack{
+            Image(systemName: "person.crop.circle")
+                .scaleEffect(1.2)
+            Text(post.username)
+                .font(.headline)
+                .fontWeight(.semibold)
+        }.padding(.horizontal)
+    }
+    
+    var postInteractionsSection: some View {
+        HStack{
+            Button {
+                didTapLike()
+            } label: {
+                Image(systemName:  liked ? "hands.clap.fill" : "hands.clap")
+                    .foregroundStyle(liked ? Color.red : Color.black)
+                    .scaleEffect(1.2)
+            }
+            Text("\(likedCount)")
+                .font(.title2)
+                .fontWeight(.semibold)
+            Spacer()
+        }.padding(.horizontal)
+    }
+    
+    var postedTimeSection : some View {
+        HStack{
+            let timePosted = getDisplayTextForPostedTime(post: post)
+            Text(timePosted)
+            Spacer()
+        }.padding(.horizontal)
+    }
+    
+}
 
 #Preview {
     PostCellView(post: Post(id: 0, username: "Hari", userid: 0, content: "Sample post", likes: 0, posttype: "text", created: 1735554088017, updated: 0, likedby: []),liked: true,likedCount: 4, onLikeTapped: {_ in })
