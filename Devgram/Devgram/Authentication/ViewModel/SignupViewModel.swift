@@ -34,7 +34,7 @@ class SignupViewModel: BaseViewModel {
             isLoading = true
             _ = try await authService.createUser(userDetails: ["email":email, "name":username, "password":password])
             //registration success, sign in
-            return try await authService.loginUser(username: username, password: password)
+            return try await authService.loginUser(username: email, password: password)
         }catch{
             print("Error signing up: \(error)")
             displayError(error: error, heading: Constants.ErrorMessages.signupErrorHeading)

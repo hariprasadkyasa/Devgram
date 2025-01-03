@@ -11,28 +11,34 @@ struct PostLinkView: View {
     @State var linkText = ""
     var displayMode : PostDisplayMode
     var body: some View {
-        VStack{
-            Text(linkText)
-                .font(displayMode == .displayModeFeed ? .subheadline : .footnote)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.blue)
+        ZStack{
+            VStack{
+                Text(linkText)
+                    .font(displayMode == .displayModeFeed ? .subheadline : .footnote)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.blue)
+            }
+            .frame(width: contentSize.width, height:contentSize.height)
+            .background(Color.green.opacity(0.7))
+            .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
             if displayMode == .displayModeFeed{
-                HStack{
+                VStack{
                     Spacer()
-                    Image(systemName: "globe")
-                        .foregroundColor(Color.blue)
-                        .font(.title)
-                        .scaleEffect(1.5)
-                    
-                }.padding(.horizontal, 20)
-                    .offset(y: 100)
+                    HStack{
+                        Spacer()
+                        Image(systemName: "globe")
+                            .foregroundColor(Color.blue)
+                            .font(.title)
+                            .scaleEffect(1.5)
+                        
+                    }.padding(30)
+                }
+                
 
             }
-            
         }
-        .frame(width: contentSize.width, height:contentSize.height)
-        .background(Color.green.opacity(0.7))
-        .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
+        
+        
         
     }
     

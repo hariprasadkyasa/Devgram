@@ -45,12 +45,13 @@ struct PostCellView: View {
                 Spacer()
             }.padding(.horizontal)
             
+            HStack{
+                let timePosted = getDisplayTextForPostedTime(post: post)
+                Text(timePosted)
+                Spacer()
+            }.padding(.horizontal)
+
         }
-        HStack{
-            let timePosted = getDisplayTextForPostedTime(post: post)
-            Text(timePosted)
-            Spacer()
-        }.padding(.horizontal)
         
         
     }

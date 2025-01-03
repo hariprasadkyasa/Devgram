@@ -11,27 +11,33 @@ struct PostTextView: View {
     var text : String = ""
     var displayMode : PostDisplayMode
     var body: some View {
-        VStack{
-            Text(text)
-                .font(displayMode == .displayModeFeed ? .headline : .footnote)
-                .multilineTextAlignment(.leading)
-                .lineLimit(20)
-                .foregroundStyle(.white)
-            if displayMode == .displayModeFeed{
-                HStack{
-                    Spacer()
-                    Image(systemName: "message.circle")
-                        .foregroundColor(Color.white)
-                        .font(.title)
-                        .scaleEffect(1.5)
-                    
-                }.padding(.horizontal, 20)
-                    .offset(y: 100)
+        ZStack{
+            VStack{
+                Text(text)
+                    .font(displayMode == .displayModeFeed ? .headline : .footnote)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(20)
+                    .foregroundStyle(.white)
+                
             }
+            .frame(width: contentSize.width, height:contentSize.height)
+            .background(Color.pink.opacity(0.7))
+            .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
+            if displayMode == .displayModeFeed{
+                VStack{
+                    Spacer()
+                    HStack{
+                        Spacer()
+                        Image(systemName: "message.circle")
+                            .foregroundColor(Color.white)
+                            .font(.title)
+                            .scaleEffect(1.5)
+                        
+                    }.padding(30)
+                }
+            }
+            
         }
-        .frame(width: contentSize.width, height:contentSize.height)
-        .background(Color.pink.opacity(0.7))
-        .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
     }
     
     var contentSize : CGSize{
