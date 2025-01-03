@@ -50,6 +50,7 @@ struct PostsView : View {
                     await viewModel.loadPosts()
                 }
             }
+            .scrollIndicators(.hidden)
         
         }.onAppear{
             Task{
