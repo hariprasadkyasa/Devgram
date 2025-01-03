@@ -26,14 +26,7 @@ struct PostCellView: View {
             
             HStack{
                 Button {
-                    if liked{
-                        liked = false
-                        likedCount -= 1
-                    }else{
-                        liked = true
-                        likedCount += 1
-                    }
-                    onLikeTapped(liked)
+                    didTapLike()
                 } label: {
                     Image(systemName:  liked ? "hands.clap.fill" : "hands.clap")
                         .foregroundStyle(liked ? Color.red : Color.black)
@@ -50,13 +43,9 @@ struct PostCellView: View {
                 Text(timePosted)
                 Spacer()
             }.padding(.horizontal)
-
         }
-        
-        
     }
 
-    
     func getDisplayTextForPostedTime(post: Post) -> String{
         let timeStamp = post.created == 0 ? post.updated : post.created
         let date = Date(timeIntervalSinceReferenceDate: timeStamp)
@@ -75,7 +64,14 @@ struct PostCellView: View {
         }
 
     }
+    
+    func didTapLike(){
+        (liked) ? (likedCount -= 1) : (likedCount += 1)
+        liked.toggle()
+        onLikeTapped(liked)
+    }
 }
+
 
 #Preview {
     PostCellView(post: Post(id: 0, username: "Hari", userid: 0, content: "Sample post", likes: 0, posttype: "text", created: 1735554088017, updated: 0, likedby: []),liked: true,likedCount: 4, onLikeTapped: {_ in })
