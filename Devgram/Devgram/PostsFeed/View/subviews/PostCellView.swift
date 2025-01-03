@@ -14,49 +14,13 @@ struct PostCellView: View {
     let onLikeTapped: (Bool) -> Void
     var body: some View {
         VStack(alignment: .leading){
-            HStack{
-                Image(systemName: "person.crop.circle")
-                    .scaleEffect(1.2)
-                Text(post.username)
-                    .font(.headline)
-                    .fontWeight(.semibold)
-            }.padding(.horizontal)
-            
+            postCreatorSection
             PostContentView(post: post)
-            
-            HStack{
-                Button {
-                    if liked{
-                        liked = false
-                        likedCount -= 1
-                    }else{
-                        liked = true
-                        likedCount += 1
-                    }
-                    onLikeTapped(liked)
-                } label: {
-                    Image(systemName:  liked ? "hands.clap.fill" : "hands.clap")
-                        .foregroundStyle(liked ? Color.red : Color.black)
-                        .scaleEffect(1.2)
-                }
-                Text("\(likedCount)")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                Spacer()
-            }.padding(.horizontal)
-            
-            HStack{
-                let timePosted = getDisplayTextForPostedTime(post: post)
-                Text(timePosted)
-                Spacer()
-            }.padding(.horizontal)
-
+            postInteractionsSection
+            postedTimeSection
         }
-        
-        
     }
 
-    
     func getDisplayTextForPostedTime(post: Post) -> String{
         let timeStamp = post.created == 0 ? post.updated : post.created
         let date = Date(timeIntervalSinceReferenceDate: timeStamp)
@@ -75,6 +39,49 @@ struct PostCellView: View {
         }
 
     }
+    
+    func didTapLike(){
+        (liked) ? (likedCount -= 1) : (likedCount += 1)
+        liked.toggle()
+        onLikeTapped(liked)
+    }
+}
+
+extension PostCellView {
+    var postCreatorSection: some View {
+        HStack{
+            Image(systemName: "person.crop.circle")
+                .scaleEffect(1.2)
+            Text(post.username)
+                .font(.headline)
+                .fontWeight(.semibold)
+        }.padding(.horizontal)
+    }
+    
+    var postInteractionsSection: some View {
+        HStack{
+            Button {
+                didTapLike()
+            } label: {
+                Image(systemName:  liked ? "hands.clap.fill" : "hands.clap")
+                    .foregroundStyle(liked ? Color.red : Color.black)
+                    .scaleEffect(1.2)
+            }
+            Text("\(likedCount)")
+                .font(.title2)
+                .fontWeight(.semibold)
+            Spacer()
+        }.padding(.horizontal)
+    }
+    
+    var postedTimeSection : some View {
+        HStack{
+            let timePosted = getDisplayTextForPostedTime(post: post)
+            Text(timePosted)
+            Spacer()
+        }.padding(.horizontal)
+    }
+    
 }
 
 #Preview {
