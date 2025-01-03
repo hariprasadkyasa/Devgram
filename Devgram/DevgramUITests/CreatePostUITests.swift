@@ -11,6 +11,7 @@ final class CreatePostUITests: XCTestCase {
     let app = XCUIApplication()
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments.append("--disableAutoLogin")
     }
 
     override func tearDownWithError() throws {
@@ -18,6 +19,7 @@ final class CreatePostUITests: XCTestCase {
     
     func testCreatePostShouldWork() throws {
         app.launch()
+        try loginWithTestUser()
         let tabBar = app.tabBars["Tab Bar"]
         if tabBar.waitForExistence(timeout: 5){
             let addPostButton = tabBar.buttons["Add"]
@@ -26,7 +28,7 @@ final class CreatePostUITests: XCTestCase {
             sleep(2)
             let postEditor = app.textViews["NewPost_Editor"]
             postEditor.tap()
-            let postText = "Test Post"
+            let postText = "Test Post ctreated by UI testing"
             postEditor.typeText(postText)
             let postButton = app.buttons["Post"]
             postButton.tap()
@@ -39,6 +41,19 @@ final class CreatePostUITests: XCTestCase {
             XCTAssertFalse(tabBar.exists)
         }
     }
-
+    
+    func loginWithTestUser() throws{
+        let testUsername = "hariprasad"
+        let testPassword = "hariprasad"
+        let emailField = app.textFields["Email"]
+        emailField.tap()
+        emailField.typeText(testUsername)
+        let passwordField = app.secureTextFields["Password"]
+        passwordField.tap()
+        passwordField.typeText(testPassword)
+        let loginButton = app.buttons["Login_Button"]
+        XCTAssertTrue(loginButton.isEnabled)
+        loginButton.tap()
+    }
     
 }

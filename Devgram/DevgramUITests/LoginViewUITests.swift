@@ -26,7 +26,7 @@ final class LoginViewUITests: XCTestCase {
     }
     
     //Run only when user has not logged in
-    func testLoginViewSignupButtonShouldWorkInIntialLaunch() throws {
+    func testLoginViewSigninButtonShouldWorkInIntialLaunch() throws {
         app.launch()
         let loginButton = app.buttons["Login_Button"]
         let notLoggedIn = loginButton.waitForExistence(timeout: 5)
@@ -48,43 +48,16 @@ final class LoginViewUITests: XCTestCase {
     }
     
     func typeTestUserNameAndPassword() throws{
-        app.textFields["Email"].tap()
+        let testUsername = "hariprasad"
+        let testPassword = "hariprasad"
+        let emailField = app.textFields["Email"]
+        emailField.tap()
+        emailField.typeText(testUsername)
         
         
-        let hKey = app/*@START_MENU_TOKEN@*/.keys["h"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"h\"]",".keys[\"h\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        hKey.tap()
-        let aKey = app/*@START_MENU_TOKEN@*/.keys["a"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"a\"]",".keys[\"a\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        aKey.tap()
-        
-        
-        let rKey = app/*@START_MENU_TOKEN@*/.keys["r"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"r\"]",".keys[\"r\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        rKey.tap()
-        
-        let iKey = app/*@START_MENU_TOKEN@*/.keys["i"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"i\"]",".keys[\"i\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        iKey.tap()
-        
-        let pKey = app/*@START_MENU_TOKEN@*/.keys["p"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"p\"]",".keys[\"p\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        pKey.tap()
-        rKey.tap()
-        aKey.tap()
-        
-        let sKey = app/*@START_MENU_TOKEN@*/.keys["s"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"s\"]",".keys[\"s\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        sKey.tap()
-        aKey.tap()
-        
-        let dKey = app/*@START_MENU_TOKEN@*/.keys["d"]/*[[".keyboards",".otherElements[\"UIKeyboardLayoutStar Preview\"].keys[\"d\"]",".keys[\"d\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/
-        dKey.tap()
-        app.secureTextFields["Password"].tap()
-        hKey.tap()
-        aKey.tap()
-        rKey.tap()
-        iKey.tap()
-        pKey.tap()
-        rKey.tap()
-        aKey.tap()
-        sKey.tap()
-        aKey.tap()
-        dKey.tap()
+        let passwordField = app.secureTextFields["Password"]
+        passwordField.tap()
+        passwordField.typeText(testPassword)
     }
     
     //Run only when user has not logged in
