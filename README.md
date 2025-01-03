@@ -31,6 +31,15 @@ With additional time, there is significant potential to implement more features 
 
 ---
 
+## Usage Instructions:
+
+- Launch the app 
+- Signup by providing a unique email id and other details.
+- The app automatically logs in after successful signup
+- The app displays posts that community has shared
+- Use Create Post option to share new post
+---
+
 ## Key Components:
 - **AuthenticationService**: A protocol defining a set of methods to handle user signup and authentication operations.
 - **AuthenticationServiceManager**: A class implementing the `AuthenticationService`.
