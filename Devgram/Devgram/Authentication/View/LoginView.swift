@@ -12,11 +12,13 @@ struct LoginView: View {
     @State var postsService : PostsService
     @State var authService : AuthenticationService
     @State var displaySignUpView : Bool = false
+    @State var autoLoginEnabled : Bool
     
-    init(authService: AuthenticationService, postsService: PostsService) {
+    init(authService: AuthenticationService, postsService: PostsService, autoLoginEnabled: Bool) {
         _viewModel = .init(wrappedValue: LoginViewModel(authService: authService))
         _postsService = .init(wrappedValue: postsService)
         _authService = .init(wrappedValue: authService)
+        _autoLoginEnabled = .init(wrappedValue: autoLoginEnabled)
     }
     var body: some View {
         NavigationView {
@@ -26,7 +28,7 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
                 
-                if viewModel.gettingUserAuthenticationStatus {
+                if viewModel.gettingUserAuthenticationStatus && autoLoginEnabled{
                     ProgressView()
                 }else{
                     // Email Field
@@ -57,6 +59,7 @@ struct LoginView: View {
                             .frame(maxWidth: .infinity)
                             .background(Color.blue)
                             .cornerRadius(10)
+                            .accessibilityIdentifier("Login_Button")
                             
                     }.disabled(viewModel.username.isEmpty || viewModel.password.isEmpty)
                     
@@ -78,7 +81,10 @@ struct LoginView: View {
                 NavigationLink("", destination: MainTabView(userSessionManager: viewModel, postsService: postsService), isActive: $viewModel.userAuthenticated)
             }
             .onAppear {
-                Task { await viewModel.checkIfUserAuthenticated() }
+                if autoLoginEnabled{
+                    Task { await viewModel.checkIfUserAuthenticated() }
+                }
+                
             }
             .padding()
             .sheet(isPresented: $displaySignUpView) {

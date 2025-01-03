@@ -11,9 +11,17 @@ import SwiftUI
 struct DevgramApp: App {
     @State private var authService: AuthenticationService = AuthenticationServiceManager()
     @State private var postsService: PostsService = PostsServiceManager()
+    @State var autoLoginEnabled = true // For UI Testing
+    
+    init() {
+        if CommandLine.arguments.contains("--disableAutoLogin"){
+            autoLoginEnabled = false
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            LoginView(authService: authService, postsService: postsService)
+            LoginView(authService: authService, postsService: postsService, autoLoginEnabled: true)
         }
     }
 }
