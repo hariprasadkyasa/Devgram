@@ -6,6 +6,10 @@
 //
 
 import Foundation
+
+/**
+ A protocol that defines the core authentication services required for managing user authetication and session.
+ */
 protocol AuthenticationService{
     func createUser(userDetails : Encodable) async throws -> User
     func loginUser(username: String, password: String) async throws -> User?

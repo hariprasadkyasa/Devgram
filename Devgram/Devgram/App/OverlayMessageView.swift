@@ -6,7 +6,14 @@
 //
 
 import SwiftUI
-
+/**
+ A view that displays an overlay message with optional visual indicators for progress, success, or error.
+ This reusable component is designed to show feedback to the user in the form of:
+ - A progress spinner when a process is ongoing.
+ - A success icon when an operation is completed successfully.
+ - An error icon when an operation fails.
+ This component can be used in .overlay view modifier in any view 
+ */
 struct OverlayMessageView: View {
     @State var message : String = ""
     @State var showProgress : Bool = false

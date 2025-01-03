@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProfileHeaderView: View {
     @State var userSessionManager: UserSessionManager
-    @EnvironmentObject var viewModel: ProfileViewModel
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 10) {
@@ -44,7 +43,6 @@ struct ProfileHeaderView: View {
 
                     }
                 }
-                
             }
             Divider()
         }

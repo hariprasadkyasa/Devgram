@@ -6,6 +6,10 @@
 //
 
 import Foundation
+/**
+ A class that implements `AuthenticationService` to provide mocked responses
+ for unit testing
+ */
 class MockAuthenticationService: AuthenticationService {
     
     let mockUser : User

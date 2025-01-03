@@ -12,7 +12,10 @@ enum HTTPMethods: String {
     case delete = "DELETE"
     case update = "PUT"
 }
-
+/**
+ A protocol defining basic requirements to form an HTTP request like method, body, params etc
+ This can be reused in a general way as it provides a clean approach to form URLReuests.
+ */
 protocol NetworkEndPoint {
     
     var method: HTTPMethods { get }

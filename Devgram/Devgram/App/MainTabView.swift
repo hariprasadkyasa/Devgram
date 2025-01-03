@@ -8,13 +8,21 @@
 import Foundation
 import SwiftUI
 
-
+/**
+ An enum represents a uniue tab in the `MainTabView`
+ */
 enum Tab: Int, Hashable {
     case posts
     case createPost
     case profile
 }
 
+
+/**
+ Parent and main view in the view heirarchy.
+ Manages navigation between core componets of the app.
+ Passes `UserSessionManager` and `PostsService` in to underlying views
+ */
 public struct MainTabView: View {
     @State var userSessionManager: UserSessionManager
     @State var postsService : PostsService

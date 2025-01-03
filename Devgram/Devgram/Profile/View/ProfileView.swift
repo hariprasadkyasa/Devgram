@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var viewModel: ProfileViewModel
+    @StateObject var postsViewModel : PostsViewModel
     @State var userSessionManager: UserSessionManager
     
     init(userSessionManager: UserSessionManager, postsService: PostsService) {
-        _viewModel = .init(wrappedValue: ProfileViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
+        _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
     }
     
     private let gridItems: [GridItem] = [
@@ -28,51 +28,50 @@ struct ProfileView: View {
             ScrollView {
                 // header
                 ProfileHeaderView(userSessionManager: userSessionManager)
-                    .environmentObject(viewModel)
                 // post grid view
                 LazyVGrid(columns: gridItems, spacing: 1) {
-                    ForEach(0..<viewModel.posts.count, id: \.self){ index in
-                        let post = viewModel.posts[index]
+                    ForEach(0..<postsViewModel.posts.count, id: \.self){ index in
+                        let post = postsViewModel.posts[index]
                         PostContentView(post: post, displayMode: .displayModeProfile)
                             .onAppear{
-                                if index == viewModel.posts.count - 1{
-                                    if !viewModel.isLoading{
+                                if index == postsViewModel.posts.count - 1{
+                                    if !postsViewModel.isLoading{
                                         if let currentUser = userSessionManager.getCurrentUser(){
-                                            Task{ await viewModel.fetchNextPosts(userId: currentUser.userId) }
+                                            Task{ await postsViewModel.loadPosts(userId: currentUser.userId) }
                                         }
                                     }
                                 }
                             }
                     }
                 }
-                if viewModel.isLoading{
+                if postsViewModel.isLoading{
                     ProgressView()
-                }else if viewModel.postsCount == 0{
-                    Text(viewModel.noPostsMessage)
+                }else if postsViewModel.postsCount == 0{
+                    Text(postsViewModel.noPostsMessage)
                 }
             }.padding(.vertical)
             .refreshable {
                 getPosts()
             }
-            .environmentObject(viewModel)
             .onAppear {
-                if !viewModel.isLoading{
+                if !postsViewModel.isLoading{
                     getPosts()
                 }
                 
             }
         }
-        .alert(viewModel.messageToDisplay.heading, isPresented: $viewModel.displayMessage) {
+        .alert(postsViewModel.messageToDisplay.heading, isPresented: $postsViewModel.displayMessage) {
             Button("OK", role: .cancel) { }
         } message: {
-            Text(viewModel.messageToDisplay.message)
+            Text(postsViewModel.messageToDisplay.message)
         }
     }
     
     func getPosts(){
         Task {
             if let currentUser = userSessionManager.getCurrentUser() {
-                await viewModel.fetchUserPosts(userId: currentUser.userId)
+                postsViewModel.postsPerPage = 20
+                await postsViewModel.loadPosts(userId: currentUser.userId)
             }
         }
     }

@@ -17,7 +17,12 @@ class SignupViewModel: BaseViewModel {
     init(authService: AuthenticationService){
         self.authService = authService
     }
-    
+    /**
+     Creates a new user if the provided details are valid else displays an error to the user.
+     Automatically logs in the user after successful registartion.
+     - Returns:
+        A User object if the registartion is successful or nil
+     */
     @MainActor
     func signup() async -> User?{
         guard !username.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && !email.isEmpty && password == confirmPassword else {
