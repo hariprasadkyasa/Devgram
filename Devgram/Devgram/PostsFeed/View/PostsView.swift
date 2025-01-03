@@ -53,6 +53,7 @@ struct PostsView : View {
         
         }.onAppear{
             Task{
+                print("On Appear called!")
                 await viewModel.loadPosts()
             }
         }

@@ -14,7 +14,7 @@ enum PostDisplayMode{
 
 
 struct PostContentView: View {
-    @State var post: Post
+    var post: Post
     var displayMode : PostDisplayMode = .displayModeFeed
     var body: some View {
         VStack{

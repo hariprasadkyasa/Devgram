@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostTextView: View {
-    @State var text : String = ""
+    var text : String = ""
     var displayMode : PostDisplayMode
     var body: some View {
         VStack{

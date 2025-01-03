@@ -54,6 +54,7 @@ struct ProfileView: View {
                 getPosts()
             }
             .onAppear {
+                print("on appear profile")
                 if !postsViewModel.isLoading{
                     getPosts()
                 }

@@ -30,7 +30,7 @@ class PostsViewModel: BaseViewModel{
     func loadPosts(userId: Int? = nil) async{
         do{
             isLoading = true
-            let posts = try await postsService.getPosts(quantity: postsPerPage,offset: offset , userId: userId)
+            let posts = try await postsService.getPosts(quantity: postsPerPage,offset: 0 , userId: userId)
             if posts.count > 0{
                 //display posts
                 self.posts = posts
