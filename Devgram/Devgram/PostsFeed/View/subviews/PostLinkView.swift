@@ -22,16 +22,16 @@ struct PostLinkView: View {
                     Image(systemName: "globe")
                         .foregroundColor(Color.blue)
                         .font(.title)
-                        .scaleEffect(2)
+                        .scaleEffect(1.5)
                     
-                }.padding(.horizontal, 30)
-                    .offset(y: 70)
+                }.padding(.horizontal, 20)
+                    .offset(y: 100)
 
             }
             
         }
         .frame(width: contentSize.width, height:contentSize.height)
-        .background(Color.green)
+        .background(Color.green.opacity(0.7))
         .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
         
     }
