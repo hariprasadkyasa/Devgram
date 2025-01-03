@@ -6,6 +6,11 @@
 //
 
 import Foundation
+
+/**
+ This protocol provides functionality to load network requests and decode the response into a specified type
+ or return raw data. It abstracts the network communication layer so the implementation can be resused in generic way
+ */
 protocol NetworkConnector {
     func loadRequest<T:Decodable>(type:T.Type, endpoint:NetworkEndPoint ) async throws -> T
     func loadRequest(endpoint:NetworkEndPoint) async throws -> Data

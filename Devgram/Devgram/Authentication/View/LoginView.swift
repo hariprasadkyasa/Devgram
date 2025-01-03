@@ -28,7 +28,7 @@ struct LoginView: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 30)
                 
-                if viewModel.gettingUserAuthenticationStatus && autoLoginEnabled{
+                if autoLoginEnabled && viewModel.gettingUserAuthenticationStatus {
                     ProgressView()
                 }else{
                     // Email Field

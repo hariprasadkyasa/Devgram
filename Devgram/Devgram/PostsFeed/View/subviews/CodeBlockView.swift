@@ -36,10 +36,10 @@ struct CodeBlockView: View {
                     Image(systemName: "apple.terminal.circle")
                         .foregroundColor(Color.red)
                         .font(.title)
-                        .scaleEffect(2)
+                        .scaleEffect(1.5)
                     
-                }.padding(.horizontal, 30)
-                    .offset(y: 70)
+                }.padding(.horizontal, 20)
+                    .offset(y: 100)
             }
         }
     }

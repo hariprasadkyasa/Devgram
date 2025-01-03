@@ -11,6 +11,7 @@ final class ProfileViewUITests: XCTestCase {
     let app = XCUIApplication()
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments.append("--disableAutoLogin")
     }
 
     override func tearDownWithError() throws {
@@ -20,11 +21,13 @@ final class ProfileViewUITests: XCTestCase {
     func testProfileViewLogoutButtonShouldWork() throws {
         
         app.launch()
+        try loginWithTestUser()
         let tabBar = app.tabBars["Tab Bar"]
         if tabBar.waitForExistence(timeout: 5){
             let profileButton = tabBar.buttons["Selfie"]
             profileButton.tap()
             XCTAssertTrue(profileButton.isSelected)
+            sleep(2)
             let logoutButton = app.scrollViews.otherElements.buttons["Logout"]
             let exists = logoutButton.waitForExistence(timeout: 1)
             XCTAssertTrue(exists)
@@ -39,6 +42,20 @@ final class ProfileViewUITests: XCTestCase {
         }
     }
     
-    
+    func loginWithTestUser() throws{
+        
+        let testUsername = "hariprasad"
+        let testPassword = "hariprasad"
+        let emailField = app.textFields["Email"]
+        emailField.tap()
+        emailField.typeText(testUsername)
+        let passwordField = app.secureTextFields["Password"]
+        passwordField.tap()
+        passwordField.typeText(testPassword)
+        let loginButton = app.buttons["Login_Button"]
+        XCTAssertTrue(loginButton.isEnabled)
+        loginButton.tap()
+        
+    }
 
 }

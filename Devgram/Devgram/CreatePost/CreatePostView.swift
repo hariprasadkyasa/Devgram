@@ -69,6 +69,7 @@ struct CreatePostView: View {
                             try? await Task.sleep(nanoseconds: 1_000_000_000)
                             viewModel.displayOverlayMessage = false
                             //navigate to posts view
+                            viewModel.postContent = ""
                             self.currentSelectedTab = Tab.posts
                         }catch{
                             print("Error creating post \(error)")
@@ -99,6 +100,9 @@ struct CreatePostView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text(viewModel.messageToDisplay.message)
+        }
+        .onAppear{
+            print("on appear cteat post")
         }
     }
     

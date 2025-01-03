@@ -11,6 +11,7 @@ final class MainTabViewUITests: XCTestCase {
     let app = XCUIApplication()
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments.append("--disableAutoLogin")
     }
 
     override func tearDownWithError() throws {
@@ -18,6 +19,7 @@ final class MainTabViewUITests: XCTestCase {
     
     func testMainTabViewTabsShouldWork() throws {
         app.launch()
+        try loginWithTestUser()
         let tabBar = app.tabBars["Tab Bar"]
         if tabBar.waitForExistence(timeout: 5){
             let homeButton = tabBar.buttons["Home"]
@@ -43,6 +45,22 @@ final class MainTabViewUITests: XCTestCase {
             //not logged in
             XCTAssertFalse(tabBar.exists)
         }
+        
+    }
+    
+    func loginWithTestUser() throws{
+        
+        let testUsername = "hariprasad"
+        let testPassword = "hariprasad"
+        let emailField = app.textFields["Email"]
+        emailField.tap()
+        emailField.typeText(testUsername)
+        let passwordField = app.secureTextFields["Password"]
+        passwordField.tap()
+        passwordField.typeText(testPassword)
+        let loginButton = app.buttons["Login_Button"]
+        XCTAssertTrue(loginButton.isEnabled)
+        loginButton.tap()
         
     }
     

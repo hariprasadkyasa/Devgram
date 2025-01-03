@@ -19,7 +19,10 @@ class LoginViewModel : BaseViewModel {
         self.authService = authService
     }
     
-    
+    /**
+     Performs login operation with the user entered details
+     Displays error updating the base class property in case of any exception from service
+     */
     @MainActor
     func login() async{
         do{
@@ -38,6 +41,11 @@ class LoginViewModel : BaseViewModel {
         
     }
     
+    /**
+     Checks if the user has already logged in and there is an active session available.
+     Gets the user profile if session is still active.
+     Displays error updating the base class property in case of any exception from service
+     */
     @MainActor
     func checkIfUserAuthenticated() async{
         do{
@@ -54,7 +62,9 @@ class LoginViewModel : BaseViewModel {
         }
         gettingUserAuthenticationStatus = false
     }
-    
+    /**
+     Gets the current user profile
+     */
     @MainActor
     func getUserProfile() async{
         do{
@@ -78,6 +88,9 @@ extension LoginViewModel : UserSessionManager{
         return currentUser
     }
     
+    /**
+     Logsout the current user, causes the UI to navigate back
+     */
     @MainActor
     func logout() async{
         do{

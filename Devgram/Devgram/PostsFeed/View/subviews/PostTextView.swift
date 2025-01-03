@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PostTextView: View {
-    @State var text : String = ""
+    var text : String = ""
     var displayMode : PostDisplayMode
     var body: some View {
         VStack{
@@ -23,14 +23,14 @@ struct PostTextView: View {
                     Image(systemName: "message.circle")
                         .foregroundColor(Color.white)
                         .font(.title)
-                        .scaleEffect(2)
+                        .scaleEffect(1.5)
                     
-                }.padding(.horizontal, 30)
-                    .offset(y: 70)
+                }.padding(.horizontal, 20)
+                    .offset(y: 100)
             }
         }
         .frame(width: contentSize.width, height:contentSize.height)
-        .background(Color.pink)
+        .background(Color.pink.opacity(0.7))
         .clipShape(RoundedRectangle(cornerRadius: displayMode == .displayModeProfile ? 0 : 10))
     }
     

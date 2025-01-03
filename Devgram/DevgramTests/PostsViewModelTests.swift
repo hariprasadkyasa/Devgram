@@ -50,4 +50,26 @@ final class PostsViewModelTests: XCTestCase {
     }
 
     
+    func testGetUserPostsShouldSucess() async{
+        let mockService = MockPostsService(mockPosts: nil)
+        let viewModel = PostsViewModel(postsService: mockService)
+        let expectation = expectation(description: "get_user_posts")
+        await viewModel.loadPosts(userId: 0)
+        expectation.fulfill()
+        XCTAssertTrue(viewModel.posts.count == mockService.mockPosts.count)
+        await fulfillment(of: [expectation], timeout: 1)
+    }
+    
+    func testGetUserPostsShouldFail() async{
+        let mockService = MockPostsService(mockPosts: nil)
+        let viewModel = PostsViewModel(postsService: mockService)
+        let expectation = expectation(description: "get_user_posts")
+        mockService.simulateError = true
+        await viewModel.loadPosts(userId: 0)
+        expectation.fulfill()
+        XCTAssertTrue(viewModel.posts.isEmpty)
+        XCTAssertEqual(viewModel.messageToDisplay.heading, Constants.ErrorMessages.errorFetchingPostsHeading)
+        await fulfillment(of: [expectation], timeout: 1)
+    }
+    
 }
