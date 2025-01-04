@@ -22,8 +22,8 @@ struct PostCellView: View {
     }
 
     func getDisplayTextForPostedTime(post: Post) -> String{
-        let timeStamp = post.created == 0 ? post.updated : post.created
-        let date = Date(timeIntervalSinceReferenceDate: timeStamp)
+        let timeStamp = post.updated
+        let date = Date(timeIntervalSince1970: timeStamp/1000)
         let seconds = Date().timeIntervalSince(date)
         if seconds < 60 {
             return "Just now"

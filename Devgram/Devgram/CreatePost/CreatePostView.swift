@@ -47,6 +47,7 @@ struct CreatePostView: View {
                 .background(selectedPostType == 1 ? Color.black : Color.white)
                 .font(.system(.body, design: selectedPostType == 1 ? .monospaced : .default))
                 .foregroundStyle(fontColor)
+                .accentColor(fontColor)
                 .frame(height: 300)
                 .cornerRadius(8.0)
                 .border(Color.gray, width: 1)

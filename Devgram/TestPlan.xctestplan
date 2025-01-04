@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "B24202BE-E483-4135-B94F-15943C4B21A4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Devgram.xcodeproj",
+        "identifier" : "1140C3262D273BE800E707CE",
+        "name" : "DevgramUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -77,7 +77,8 @@ struct LoginView: View {
                         }
                     }
                 }
-                
+                // FIX ME: NavigationLink is deprecated but using NavigationStack
+                // is introducing some major UI issues
                 NavigationLink("", destination: MainTabView(userSessionManager: viewModel, postsService: postsService), isActive: $viewModel.userAuthenticated)
             }
             .onAppear {

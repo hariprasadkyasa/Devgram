@@ -17,7 +17,7 @@ enum ConnectionError: Error {
     case parsingFailure
     case requestFailed(description: String)
     case invalidURL
-    case invalidStatusCode(statusCode: Int)
+    case invalidStatusCode(statusCode: Int, responseData: Data)
     case unknownError(error:Error)
     var localizedDescription: String {
         switch self {
@@ -29,9 +29,7 @@ enum ConnectionError: Error {
             return "Request failed \(description)"
         case .invalidURL: 
             return "Invalid URL"
-        case let .invalidStatusCode(statusCode): 
-            return "Received Status Code \(statusCode) from server. Make sure you provide valid details."
-        case let .unknownError(error): 
+        case let .unknownError(error):
             return "A network error occurred: \(error.localizedDescription)"
         case .tokenSaveFailed:
             return "Toke save failed. Please relaunch app and try again."
@@ -43,7 +41,18 @@ enum ConnectionError: Error {
             return "Invalid tokem"
         case .tokenExpired:
             return "Token expired. Please login to continue."
+        case .invalidStatusCode(let statusCode, let responseData):
+            var description = "Server returned error \(statusCode). Please try again with valid input."
+            do {
+                if let errorResponse = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String:Any]{
+                    if let errorDescription = errorResponse["message"] as? String {
+                        description = errorDescription
+                    }
+                }
+                return description
+            } catch {
+                return description
+            }
         }
     }
-    
 }

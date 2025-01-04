@@ -44,8 +44,8 @@ final class ProfileViewUITests: XCTestCase {
     
     func loginWithTestUser() throws{
         
-        let testUsername = "hariprasad"
-        let testPassword = "hariprasad"
+        let testUsername = UITestConstants.TestUser.userName
+        let testPassword = UITestConstants.TestUser.password
         let emailField = app.textFields["Email"]
         emailField.tap()
         emailField.typeText(testUsername)

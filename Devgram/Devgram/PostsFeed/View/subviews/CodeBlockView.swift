@@ -30,7 +30,7 @@ struct CodeBlockView: View {
     func attributedString(for code: String) -> AttributedString {
         var attributedString = AttributedString(code)
         // Define Swift keywords and regex pattern for strings
-            let keywords = ["let", "var", "if", "else", "struct", "func", "return", "print"]
+            let keywords = ["let", "var", "if", "else", "struct", "func", "return", "print", "for", "while", "switch", "case"]
             let stringPattern = "\\\\.*?\\\\"
             // Regex pattern to match strings
             // Highlight keywords
