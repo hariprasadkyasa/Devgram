@@ -46,6 +46,9 @@ enum ConnectionError: Error {
             do {
                 if let errorResponse = try JSONSerialization.jsonObject(with: responseData, options: []) as? [String:Any]{
                     if let errorDescription = errorResponse["message"] as? String {
+                        // FIX ME: Understand backendless error codes
+                        // Show custom errors per error code istead of displaying
+                        // what is coming from server.
                         description = errorDescription
                     }
                 }
