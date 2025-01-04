@@ -38,11 +38,11 @@ final class SignupViewModelTests: XCTestCase {
     }
     
     func testSignupShouldSucess() async{
-        let mockService = MockAuthenticationService(mockUser: User(userId: 0, name: "test user", email: "test@xyz.com"))
+        let mockService = MockAuthenticationService(mockUser: User(userId: 0, name: "test_user", email: "test@xyz.com"))
         let viewModel = SignupViewModel(authService: mockService)
-        viewModel.username = "test user"
-        viewModel.password = "test password"
-        viewModel.confirmPassword = "test password"
+        viewModel.username = "test_user"
+        viewModel.password = "test_password"
+        viewModel.confirmPassword = "test_password"
         viewModel.email = "test@xyz.com"
         let expectation = XCTestExpectation(description: "signup")
         if let user = await viewModel.signup(){

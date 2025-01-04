@@ -33,7 +33,7 @@ final class LoginViewModelTests: XCTestCase {
         //and the currentUser object should not be nil
         if let loginViewModel = uut {
             let expectation = XCTestExpectation(description: "user_login")
-            loginViewModel.username = "Test User"
+            loginViewModel.username = "test@abc.com"
             loginViewModel.password = "test1234"
             await uut?.login()
             expectation.fulfill()
@@ -67,7 +67,7 @@ final class LoginViewModelTests: XCTestCase {
         //after successful login
         if let loginViewModel = uut {
             let loginExpectation = XCTestExpectation(description: "user_login")
-            loginViewModel.username = "Test User"
+            loginViewModel.username = "test@abc.com"
             loginViewModel.password = "test1234"
             await uut?.login()
             loginExpectation.fulfill()

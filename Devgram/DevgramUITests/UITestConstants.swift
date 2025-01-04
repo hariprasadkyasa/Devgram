@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+enum UITestConstants{
+    enum TestUser{
+        static let userName = "testuser@devpods.com"
+        static let password = "testpassword"
+    }
+}

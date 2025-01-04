@@ -48,12 +48,11 @@ final class LoginViewUITests: XCTestCase {
     }
     
     func typeTestUserNameAndPassword() throws{
-        let testUsername = "hariprasad"
-        let testPassword = "hariprasad"
+        let testUsername = UITestConstants.TestUser.userName
+        let testPassword = UITestConstants.TestUser.password
         let emailField = app.textFields["Email"]
         emailField.tap()
         emailField.typeText(testUsername)
-        
         
         let passwordField = app.secureTextFields["Password"]
         passwordField.tap()
