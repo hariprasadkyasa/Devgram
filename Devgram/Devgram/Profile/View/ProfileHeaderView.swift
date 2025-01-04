@@ -40,7 +40,6 @@ struct ProfileHeaderView: View {
                                 .frame(width: 100)
                                 .border(Color.red, width: 0.5)
                         }
-
                     }
                 }
             }

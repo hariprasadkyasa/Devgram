@@ -48,11 +48,8 @@ extension NetworkConnector {
         }
         
         guard httpResponse.statusCode == 200 else {
-            //check if it is 400 error
-            if httpResponse.statusCode == 400 {
-                throw ConnectionError.serverReturnedError(errorData: data)
-            }
-            throw ConnectionError.invalidStatusCode(statusCode: httpResponse.statusCode)
+            // FIX ME: Improve to throw corresponsing error instead of generic one
+            throw ConnectionError.invalidStatusCode(statusCode: httpResponse.statusCode, responseData: data)
         }
         
         return data
