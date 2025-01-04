@@ -23,7 +23,7 @@ extension NetworkConnector {
         do {
             return try JSONDecoder().decode(T.self, from: data)
         }catch {
-            throw error as? ConnectionError ?? .unknownError(error: error)
+            throw error as? ConnectionError ?? ConnectionError.parsingFailure
         }
     }
     
@@ -48,6 +48,10 @@ extension NetworkConnector {
         }
         
         guard httpResponse.statusCode == 200 else {
+            //check if it is 400 error
+            if httpResponse.statusCode == 400 {
+                throw ConnectionError.serverReturnedError(errorData: data)
+            }
             throw ConnectionError.invalidStatusCode(statusCode: httpResponse.statusCode)
         }
         

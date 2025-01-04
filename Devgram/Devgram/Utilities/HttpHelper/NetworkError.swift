@@ -19,6 +19,7 @@ enum ConnectionError: Error {
     case invalidURL
     case invalidStatusCode(statusCode: Int)
     case unknownError(error:Error)
+    case serverReturnedError(errorData:Data)
     var localizedDescription: String {
         switch self {
         case .invalidRequest: 
@@ -43,7 +44,18 @@ enum ConnectionError: Error {
             return "Invalid tokem"
         case .tokenExpired:
             return "Token expired. Please login to continue."
+        case .serverReturnedError(let errorData) :
+            var description = "Server returned error. Please try again with valid input."
+            do {
+                if let errorResponse = try JSONSerialization.jsonObject(with: errorData, options: []) as? [String:Any]{
+                    if let errorDescription = errorResponse["message"] as? String {
+                        description = errorDescription
+                    }
+                }
+                return description
+            } catch {
+                return description
+            }
         }
     }
-    
 }
