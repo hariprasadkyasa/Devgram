@@ -6,16 +6,24 @@
 //
 
 import SwiftUI
-
+/**
+ A view that displays the user's profile, including their profile header, posts, with pull to refresh option.
+ The posts are displayed in a grid layout, and the view fetches posts for the current user from the `PostsViewModel`.
+ */
 struct ProfileView: View {
     @StateObject var postsViewModel : PostsViewModel
     @State var userSessionManager: UserSessionManager
-    
+    /**
+     Initializer to inject dependencies for user session and posts service
+     */
     init(userSessionManager: UserSessionManager, postsService: PostsService) {
         _userSessionManager = .init(wrappedValue: userSessionManager)
         _postsViewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
     }
-    
+     
+    /**
+     Define a grid layout for displaying posts (three columns)
+     */
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
@@ -67,7 +75,9 @@ struct ProfileView: View {
             Text(postsViewModel.messageToDisplay.message)
         }
     }
-    
+    /**
+     Function to fetch the posts for the current user
+     */
     func getPosts(){
         Task {
             if let currentUser = userSessionManager.getCurrentUser() {

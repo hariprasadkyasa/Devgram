@@ -6,7 +6,10 @@
 //
 
 import SwiftUI
-
+/**
+A view that displays the profile header for the current user, including their profile picture, name, email, and a logout button.
+This view is part of the user profile view , and it fetches user information from the `UserSessionManager` to display in UI.
+ */
 struct ProfileHeaderView: View {
     @State var userSessionManager: UserSessionManager
     var body: some View {
