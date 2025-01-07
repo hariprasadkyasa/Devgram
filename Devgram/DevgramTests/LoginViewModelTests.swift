@@ -27,6 +27,10 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertNotNil(uut)
     }
     
+    /**
+     This test verifies that when valid user details are provided, the login process succeeds.
+     It ensures that there are no error messages, the current user is set, and the login state is authenticated.
+     */
     func testUserLoginShouldSucess() async{
         //when we provide valida user details
         //there shluld be no error message
@@ -47,6 +51,10 @@ final class LoginViewModelTests: XCTestCase {
         }
     }
     
+    /**
+    This test verifies that when invalid user details are provided, the login process fails.
+    It checks that an error message is displayed, the current user is nil, and the user authentication state is false.
+     */
     func testUserLoginShouldFail() async{
         if let loginViewModel = uut {
             let expectation = XCTestExpectation(description: "user_login")
@@ -62,6 +70,10 @@ final class LoginViewModelTests: XCTestCase {
         }
     }
     
+    /**
+    This test verifies that after a successful login, the authentication state is valid.
+    It ensures the user is authenticated, the message is empty, and the current user is properly set.
+     */
     func testAuthenticationStateShouldBeValid() async{
         //test to check the autheticate status to be valid
         //after successful login
@@ -83,9 +95,11 @@ final class LoginViewModelTests: XCTestCase {
         }
     }
     
+    /**
+    This test verifies that when the user is not authenticated, the authentication state is invalid.
+    It ensures that the user authentication state is false, and the current user is nil.
+     */
     func testAuthenticationStateShouldBeInValid() async{
-        //test to check the autheticate status to be valid
-        //after successful login
         if let loginViewModel = uut {
             let expectation = XCTestExpectation(description: "authentication_state")
             await loginViewModel.checkIfUserAuthenticated()
