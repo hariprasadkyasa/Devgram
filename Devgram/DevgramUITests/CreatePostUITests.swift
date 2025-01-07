@@ -16,6 +16,10 @@ final class CreatePostUITests: XCTestCase {
     override func tearDownWithError() throws {
     }
     
+    // FIX ME: This test might fail when xcode decides to perform UI tests
+    // in parallel mode using multiple simulators because the user token gets
+    // invalidated by other simulator while this test is running.
+    // Added a test plan to prevent parellel execution but that seems to be not working effectively.
     /**
     This test verifies that the post creation feature works correctly.
     It logs in the user, navigates to the "Add Post" screen, creates a post, and ensures that the post appears successfully.
