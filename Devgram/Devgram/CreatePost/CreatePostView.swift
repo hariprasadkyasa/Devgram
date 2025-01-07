@@ -6,19 +6,36 @@
 //
 
 import SwiftUI
-
+/**
+ This view provides inteface to create a new post.
+ User can perform the following tasks using this inteface:
+  - Provide content for a new post using a text editor.
+  - Select the type of post (Text, Code, or Link) through a segmented control.
+  - Submit the post to the server using the `Post` button.
+  - Handle success and error states during post creation.
+  - Automatically navigate to the posts feed upon successful post creation.
+ */
 struct CreatePostView: View {
+    //MARK: Properties
     @StateObject var viewModel : CreatePostViewModel
     @State var userSessionManager : UserSessionManager
     @State private var selectedPostType = 0
     @Binding var currentSelectedTab: Tab
     
+    /**
+     Initializes the `CreatePostView` with the required dependencies.
+     - Parameters:
+       - userSessionManager: The session manager for getting current user details.
+       - postsService: The service responsible for creating new post.
+       - currentSelectedTab: A binding that manages the currently active tab in the main Tab view.
+     */
     init(userSessionManager: UserSessionManager,postsService: PostsService, currentSelectedTab: Binding<Tab>) {
         _viewModel = .init(wrappedValue: CreatePostViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)
         _currentSelectedTab = .init(projectedValue: currentSelectedTab)
     }
     
+    //MARK: View Body
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             HStack{
@@ -107,7 +124,9 @@ struct CreatePostView: View {
         }
     }
     
-    
+    /**
+     A varibale that decides the font color based on the selected post type.
+     */
     var fontColor : Color {
         switch selectedPostType {
         case 0:
