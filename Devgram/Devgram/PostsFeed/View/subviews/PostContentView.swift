@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/**
+ Enum representing the display mode for the post content view.
+ - `displayModeFeed`: Display mode for posts in the feed (default).
+ - `displayModeProfile`: Display mode for posts in profile view, with a smaller size.
+ */
 enum PostDisplayMode{
     case displayModeFeed
     case displayModeProfile
@@ -42,7 +47,9 @@ struct PostContentView: View {
         }
         .padding(.horizontal)
     }
-    
+    /**
+     Calculates the size of the content view based on the display mode (profile or feed).
+     */
     var contentSize : CGSize{
         var size = CGSize()
         size.width = UIScreen.main.bounds.width - 20
@@ -54,6 +61,9 @@ struct PostContentView: View {
         return size
     }
     
+    /**
+     Determines the background color of the content view based on the post type.
+     */
     var contentBackgroundColor : Color{
         switch post.posttype{
         case PostType.text.rawValue:
@@ -67,6 +77,9 @@ struct PostContentView: View {
         }
     }
     
+    /**
+     Determines the name of the indicator image based on the post type (text, link, or code) to improve identification of posts type.
+     */
     var indicatorImageName : String{
         switch post.posttype{
         case PostType.text.rawValue:
@@ -79,6 +92,10 @@ struct PostContentView: View {
             return "message.circle"
         }
     }
+    
+    /**
+     Determines the color of the indicator image based on the post type.
+     */
     var indicatorImageColor : Color{
         switch post.posttype{
         case PostType.text.rawValue:
@@ -95,6 +112,9 @@ struct PostContentView: View {
 }
 
 extension PostContentView {
+    /**
+     View for displaying the text content of a post.
+     */
     var postTextView: some View {
         Text(post.content)
             .font(displayMode == .displayModeFeed ? .headline : .footnote)
@@ -103,13 +123,18 @@ extension PostContentView {
             .foregroundStyle(.white)
     }
     
+    /**
+     View for displaying a link post.
+     */
     var postLinkView: some View {
         Text(post.content)
             .font(displayMode == .displayModeFeed ? .subheadline : .footnote)
             .fontWeight(.semibold)
             .foregroundStyle(Color.blue)
     }
-    
+    /**
+     View for displaying an indicator overlay, showing the post type (text, link, or code).
+     */
     var indicatorOverlayView: some View {
         VStack{
             Spacer()

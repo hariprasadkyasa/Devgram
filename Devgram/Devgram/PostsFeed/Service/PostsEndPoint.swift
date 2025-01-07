@@ -6,6 +6,15 @@
 //
 
 import Foundation
+/**
+`PostsEndPoint` is an enumeration representing the various API endpoints for managing posts in the application.
+This enum conforms to `NetworkEndPoint` so it can be used to send posts relates requests to server.
+Supported Endpoints:
+ - `getPosts`: Fetches a list of posts with pagination.
+ - `createPost`: Creates a new post with the provided data.
+ - `updatePost`: Updates an existing post using its unique identifier (object ID).
+ - `getUserPosts`: Fetches posts specific to a user with pagination.
+ */
 enum PostsEndPoint {
     case getPosts(count:Int, index:Int, token:String)
     case createPost(post:Post, token:String)
@@ -14,7 +23,14 @@ enum PostsEndPoint {
     
 }
 
+
+/**
+ An extention of `PostsEndPoint` confirming to `NetworkEndPoint`
+ */
 extension PostsEndPoint: NetworkEndPoint {
+    /**
+     Specifies the HTTP method for each endpoint.
+     */
     var method: HTTPMethods {
         switch self{
         case .getPosts, .getUserPosts: return .get
@@ -22,7 +38,10 @@ extension PostsEndPoint: NetworkEndPoint {
         case .updatePost: return .update
         }
     }
-    
+    /**
+     Provides the path for each request.
+     For `updatePost`, the path includes the object ID of the post being updated.
+     */
     var path: String {
         switch self{
         case .getPosts, .createPost, .getUserPosts:
@@ -34,11 +53,18 @@ extension PostsEndPoint: NetworkEndPoint {
             return "/api/data/Posts"
         }
     }
-    
+    /**
+     Specifies the base URL for all endpoints.
+     */
     var baseURL: String {
         return Constants.API.baseUrl
     }
     
+    /**
+     Defines the body content for HTTP requests.
+     - For `getPosts` and `getUserPosts`, as the request is GET type, there will be no body.
+     - For `createPost` and `updatePost`, the body contains the `Post` object.
+     */
     var body: (any Encodable)? {
         switch self{
         case .getPosts, .getUserPosts:
@@ -48,6 +74,10 @@ extension PostsEndPoint: NetworkEndPoint {
         }
     }
     
+    /**
+     Specifies the headers for each endpoint.
+     - Includes the user token for authentication for applicable requests.
+     */
     var headers: [String : String]? {
         switch self{
         case .getPosts, .getUserPosts:
@@ -59,6 +89,10 @@ extension PostsEndPoint: NetworkEndPoint {
         }
     }
     
+    /**
+     Specifies the query parameters for each endpoint.
+     - Includes pagination parameters for `getPosts` and `getUserPosts`.
+     */
     var queryItems: [URLQueryItem]? {
         switch self{
         case .getPosts(count:let count, index:let index, token:_):

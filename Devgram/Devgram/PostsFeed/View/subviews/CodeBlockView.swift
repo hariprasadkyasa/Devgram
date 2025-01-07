@@ -8,6 +8,12 @@
 import SwiftUI
 import Foundation
 
+/**
+A view that displays a block of code with syntax highlighting.
+It accepts following parameters:
+ - `code`: The source code to display in the view.
+ - `displayMode`: A mode that controls the styling of the text, based on where the view is being used; in profile view or feeds view.
+ */
 struct CodeBlockView: View {
     var code: String
     var displayMode : PostDisplayMode
@@ -27,6 +33,13 @@ struct CodeBlockView: View {
         }
     }
     
+    
+    /**
+     Converts the given text into an `AttributedString` with syntax highlighting.
+     It highlights Swift keywords in red and green.
+     - Parameter code: The raw text to be attributed.
+     - Returns: An `AttributedString` with highlighted keywords and strings.
+     */
     func attributedString(for code: String) -> AttributedString {
         var attributedString = AttributedString(code)
         // Define Swift keywords and regex pattern for strings
@@ -56,6 +69,9 @@ struct CodeBlockView: View {
     }
 }
 
+/**
+ An Extension on String to add functionality for finding ranges of substrings within a string.
+ */
 extension String {
     func ranges(of substring: String) -> [Range<String.Index>] {
         var result: [Range<String.Index>] = []
