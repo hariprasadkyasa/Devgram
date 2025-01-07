@@ -16,8 +16,18 @@ protocol NetworkConnector {
     func loadRequest(endpoint:NetworkEndPoint) async throws -> Data
 }
 
+/**
+ An extension to NetworkConnector providing default implementaion for the required methods.
+ */
 extension NetworkConnector {
-    
+    /**
+     Asynchronously loads a request from the specified endpoint, decodes the response data into the specified type `T`.
+     - Parameters:
+       - type: The type that conforms to `Decodable` which the response will be decoded into.
+       - endpoint: The `NetworkEndPoint` that contains details for the request (URL, method, headers, etc.).
+     - Returns: The decoded object of type `T`.
+     - Throws: Throws errors for connection issues, parsing failures, or invalid status codes.
+     */
     func loadRequest<T:Decodable>(type:T.Type, endpoint:NetworkEndPoint ) async throws -> T {
         let data = try await loadRequest(endpoint: endpoint)
         do {
@@ -27,6 +37,13 @@ extension NetworkConnector {
         }
     }
     
+    /**
+    Asynchronously loads a request from the specified endpoint and returns the response data.
+    - Parameters:
+     - endpoint: The `NetworkEndPoint` containing the details of the request.
+     - Returns: Raw `Data` from the server's response.
+    - Throws: Throws errors for invalid URL, failed request, or non-200 status codes.
+     */
     func loadRequest(endpoint : NetworkEndPoint) async throws -> Data{
         guard let url = endpoint.url else {
             throw ConnectionError.invalidURL
