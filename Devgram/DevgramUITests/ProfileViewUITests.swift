@@ -18,6 +18,10 @@ final class ProfileViewUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    /**
+    This test verifies the functionality of the logout button in the profile view.
+    It checks that after tapping the profile button, the logout button appears, and when tapped, the user is successfully logged out and the login button appears.
+     */
     func testProfileViewLogoutButtonShouldWork() throws {
         
         app.launch()
@@ -42,6 +46,10 @@ final class ProfileViewUITests: XCTestCase {
         }
     }
     
+    /**
+    Helper method to simulate logging in with a test user.
+    This method enters the predefined test username and password and taps the login button.
+     */
     func loginWithTestUser() throws{
         
         let testUsername = UITestConstants.TestUser.userName

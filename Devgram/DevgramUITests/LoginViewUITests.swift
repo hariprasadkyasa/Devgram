@@ -25,7 +25,12 @@ final class LoginViewUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
-    //Run only when user has not logged in
+    
+    /**
+    Run only when user has not logged in
+    This test verifies that the "Login" button functions as expected on the initial app launch when the user is not logged in.
+    It ensures that the login button is disabled initially, and after typing valid credentials, the user is redirected to the home screen.
+     */
     func testLoginViewSigninButtonShouldWorkInIntialLaunch() throws {
         app.launch()
         let loginButton = app.buttons["Login_Button"]
@@ -47,6 +52,9 @@ final class LoginViewUITests: XCTestCase {
         
     }
     
+    /**
+     Helper method to type the test username and password into the login form fields.
+     */
     func typeTestUserNameAndPassword() throws{
         let testUsername = UITestConstants.TestUser.userName
         let testPassword = UITestConstants.TestUser.password
@@ -59,7 +67,10 @@ final class LoginViewUITests: XCTestCase {
         passwordField.typeText(testPassword)
     }
     
-    //Run only when user has not logged in
+    /**
+    This test verifies that the "Sign Up" button works as expected when the user is not logged in.
+    It ensures that tapping the sign-up button leads to a screen with the necessary fields for the user to sign up, and checks if the sign-up button is initially disabled.
+     */
     func testSignUpButtonShouldWork() throws{
         
         app.launch()
