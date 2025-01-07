@@ -34,7 +34,7 @@ class MockAuthenticationService: AuthenticationService {
     }
     
     func loginUser(username: String, password: String) async throws -> User?{
-        //if user name is same as mock username retun success
+        //if user name is same as mock username return success
         if username == mockUser.email && !password.isEmpty{
             isAuthenticated = true
             return mockUser
