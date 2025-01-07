@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "B24202BE-E483-4135-B94F-15943C4B21A4",
+      "id" : "E674DBE1-2909-44A4-A032-D9556C016F8F",
       "name" : "Configuration 1",
       "options" : {
 
@@ -12,6 +12,14 @@
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Devgram.xcodeproj",
+        "identifier" : "1140C2342D26E39F00E707CE",
+        "name" : "DevgramTests"
+      }
+    },
     {
       "target" : {
         "containerPath" : "container:Devgram.xcodeproj",

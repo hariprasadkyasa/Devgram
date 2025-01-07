@@ -6,7 +6,12 @@
 //
 
 import Foundation
+/**
+ A subclass of `BaseViewModel` to handle bussiness logic of user signup functionality.
+ An instance of this calsss is used by `SignupView` and refreshes UI based on state changes.
+ */
 class SignupViewModel: BaseViewModel {
+    //MARK: Properties
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var confirmPassword: String = ""

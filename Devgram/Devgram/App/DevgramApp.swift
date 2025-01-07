@@ -5,9 +5,11 @@
 //  Created by Raghavendra Hariprasad Kyasa on 27/12/24.
 //
 
-/// This is starting point of the app. The 'DevgramApp' creates
-/// dependencies `AuthenticationService` and `PostsService`that app uses
-/// and injects them in to 'LoginView' that will be passed to other views in the hierarchy
+/**
+This is starting point of the app. The 'DevgramApp' creates
+dependencies `AuthenticationService` and `PostsService`that app uses
+and injects them in to 'LoginView' that will be passed to other views in the hierarchy
+*/
 
 import SwiftUI
 

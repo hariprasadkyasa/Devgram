@@ -6,15 +6,24 @@
 //
 
 import Foundation
-
+/**
+ An ObservableObject class responsible for managing the state and logic related to user login and session management.
+ The class inherits from `BaseViewModel` to leverage shared functionality such as error handling and message display.
+ An instance of this calsss is used by LoginView and refreshes UI based on state changes.
+ */
 class LoginViewModel : BaseViewModel {
+    //MARK: Properties
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var userAuthenticated = false
     @Published var authenticationInProgress = false
     @Published var gettingUserAuthenticationStatus = false
-    private var authService : AuthenticationService
     @Published var currentUser : User?
+    private var authService : AuthenticationService
+    
+    /**
+     Initialiser to accept `AuthenticationService` as dependency
+     */
     init(authService: AuthenticationService){
         self.authService = authService
     }

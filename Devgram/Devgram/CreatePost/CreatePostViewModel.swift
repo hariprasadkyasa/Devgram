@@ -6,12 +6,18 @@
 //
 
 import Foundation
-
+/**
+The `CreatePostViewModel` is a view model class responsible for managing creating posts logic and state of the `CreatePostView`.
+This class inherits from `BaseViewModel` and iteracts with the `PostsService` to save the post.
+ */
 class CreatePostViewModel : BaseViewModel{
     private let postsService : PostsService
     @Published var postContent : String = ""
     let postTypes : [String] = [PostType.text.rawValue, PostType.code.rawValue, PostType.link.rawValue]
     
+    /**
+     Initialises `CreatePostViewModel` with `PostsService` as dependency
+     */
     init(postsService : PostsService){
         self.postsService = postsService
     }

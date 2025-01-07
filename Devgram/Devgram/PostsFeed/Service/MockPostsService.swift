@@ -6,6 +6,9 @@
 //
 
 import Foundation
+/**
+ A Mock class that implements `PostsService` to provide mock data and responses used for unit testing.
+ */
 class MockPostsService: PostsService {
     
     var mockPosts : [Post]

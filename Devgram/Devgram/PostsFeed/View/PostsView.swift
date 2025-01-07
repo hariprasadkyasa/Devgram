@@ -7,11 +7,15 @@
 
 import Foundation
 import SwiftUI
-
+/**
+ A view for displaying a list of posts, allowing users to like/unlike posts and load more posts by scrolling ecisting content.
+ */
 struct PostsView : View {
     @StateObject var viewModel: PostsViewModel
     @State var userSessionManager: UserSessionManager
-    
+    /**
+     Initialize the PostsView with a user session manager and posts service.
+     */
     init(userSessionManager: UserSessionManager, postsService: PostsService){
         _viewModel = .init(wrappedValue: PostsViewModel(postsService: postsService))
         _userSessionManager = .init(wrappedValue: userSessionManager)

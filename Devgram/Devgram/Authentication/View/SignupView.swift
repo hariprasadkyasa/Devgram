@@ -6,15 +6,25 @@
 //
 
 import SwiftUI
-
+/**
+ A view that provides interface to provide user details to create new user on the backend.
+ */
 struct SignupView: View {
     @ObservedObject var viewModel : SignupViewModel
     var signUpCompletion : ((User?) -> Void)
-    
+     
+    /**
+     Initializes the `SignupView` with the required dependencies and a completihandler to be invoked upon successful signup.
+     - Parameters:
+       - authService: The `AuthenticationService` instance used to handle signup operation.
+       - signUpCompletion: A closure that is executed on successful completion of signup process. The User object is sent as parameter in to the closure.
+     */
     init(authService: AuthenticationService, signUpCompletion : @escaping ((User?) -> Void)) {
         _viewModel = .init(wrappedValue: SignupViewModel(authService: authService))
         self.signUpCompletion = signUpCompletion
     }
+    
+    //MARK: View body
     var body: some View {
         VStack{
             Text(Constants.Labels.ProvideSignupDetailsMessage)

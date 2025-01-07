@@ -6,6 +6,10 @@
 //
 
 import Foundation
+/**
+ Enum that represents different types of connection errors that may occur during network requests.
+ This enum conforms to the `Error` protocol to be used for error handling in network operations.
+ */
 enum ConnectionError: Error {
     
     case tokenSaveFailed
@@ -19,6 +23,11 @@ enum ConnectionError: Error {
     case invalidURL
     case invalidStatusCode(statusCode: Int, responseData: Data)
     case unknownError(error:Error)
+
+    /**
+     A computed property that returns a more detailed localized error message for each error case.
+     It provides meaningful descriptions that can be displayed to the user based on the type of error.
+     */
     var localizedDescription: String {
         switch self {
         case .invalidRequest: 

@@ -22,6 +22,10 @@ final class SignupViewModelTests: XCTestCase {
         }
     }
     
+    /**
+    This test simulates a scenario where the user attempts to sign up with invalid fields (e.g., email).
+    It verifies that the sign-up process fails, an error message is displayed, and the appropriate heading for invalid signup details is shown.
+     */
     func testSignupShouldFailWithInvalidFields() async{
         let mockService = MockAuthenticationService(mockUser: nil)
         let viewModel = SignupViewModel(authService: mockService)
@@ -37,6 +41,10 @@ final class SignupViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1)
     }
     
+    /**
+    This test simulates a scenario where the user successfully signs up with valid fields.
+    It verifies that the sign-up process succeeds, the error message is not displayed, and the returned user data matches the input details.
+     */
     func testSignupShouldSucess() async{
         let mockService = MockAuthenticationService(mockUser: User(userId: 0, name: "test_user", email: "test@xyz.com"))
         let viewModel = SignupViewModel(authService: mockService)

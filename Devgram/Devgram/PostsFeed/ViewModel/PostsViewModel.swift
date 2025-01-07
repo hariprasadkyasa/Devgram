@@ -6,6 +6,9 @@
 //
 
 import Foundation
+/**
+ This class handles the retrieval of posts, pagination, error handling, and updates the posts when liked by a user.
+ */
 class PostsViewModel: BaseViewModel{
     private let postsService : PostsService
     @Published var posts : [Post] = [Post]()

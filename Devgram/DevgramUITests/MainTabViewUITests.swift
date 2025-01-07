@@ -17,6 +17,10 @@ final class MainTabViewUITests: XCTestCase {
     override func tearDownWithError() throws {
     }
     
+    /**
+    This test verifies the functionality of the main tab view (tab bar) when the user is logged in.
+    It checks that the user can navigate between the Home, Add Post, and Profile tabs, and that relevant elements like the "Create Post" label and "Post" button are displayed in the Add Post screen.
+     */
     func testMainTabViewTabsShouldWork() throws {
         app.launch()
         try loginWithTestUser()
@@ -48,6 +52,10 @@ final class MainTabViewUITests: XCTestCase {
         
     }
     
+    /**
+    Helper method to simulate logging in with a test user.
+    This method enters the predefined test username and password and taps the login button.
+     */
     func loginWithTestUser() throws{
         
         let testUsername = UITestConstants.TestUser.userName

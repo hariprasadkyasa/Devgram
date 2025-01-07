@@ -22,6 +22,9 @@ final class PostsViewModelTests: XCTestCase {
         uut = nil
     }
     
+    /**
+     This test verifies that when posts are successfully loaded, the `posts` array contains data, no error message is displayed, and the `displayMessage` flag is false.
+     */
     func testFetchPostsShouldSuccess() async{
         if let postsViewModel = uut{
             let expectation = XCTestExpectation(description: "load_posts_expectation")
@@ -34,6 +37,10 @@ final class PostsViewModelTests: XCTestCase {
         }
     }
     
+    /**
+    This test simulates a failure scenario where an error occurs while fetching posts.
+    It verifies that no posts are loaded, the error message is shown, and the `displayMessage` flag is true.
+     */
     func testFetchPostsShouldFail() async{
         if let postsViewModel = uut{
             let expectation = XCTestExpectation(description: "load_posts_expectation")
@@ -49,7 +56,10 @@ final class PostsViewModelTests: XCTestCase {
         }
     }
 
-    
+    /**
+    This test verifies that posts for a specific user are fetched successfully.
+    It ensures that the number of posts matches the mock service's posts count.
+     */
     func testGetUserPostsShouldSucess() async{
         let mockService = MockPostsService(mockPosts: nil)
         let viewModel = PostsViewModel(postsService: mockService)
@@ -60,6 +70,10 @@ final class PostsViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1)
     }
     
+    /**
+    This test simulates a failure scenario when attempting to fetch posts for a specific user.
+    It ensures that no posts are fetched, and an appropriate error message is shown.
+     */
     func testGetUserPostsShouldFail() async{
         let mockService = MockPostsService(mockPosts: nil)
         let viewModel = PostsViewModel(postsService: mockService)

@@ -6,7 +6,10 @@
 //
 
 import Foundation
-
+/**
+ An enum represents various endpoints required for user authentication and user management, such as login, logout, session validation, and user profile retrieval.
+ Each case in the enum corresponds to a specific endpoint, and the associated properties are used to construct the request with the necessary details.
+ */
 enum AuthEndPoint {
     case login(username: String, password: String)
     case logout(token:String)
@@ -15,7 +18,17 @@ enum AuthEndPoint {
     case createUser(userDetails : Encodable)
 }
 
+
+/**
+ Extension of `AuthEndPoint` to conform to the `NetworkEndPoint` protocol.
+ This extension defines how each case of `AuthEndPoint` is translated into a complete network request, including HTTP method, path, base URL, request body, headers, and query parameters.
+ */
 extension AuthEndPoint: NetworkEndPoint {
+    /**
+     The HTTP method to use for the request.
+     - `.post` for creating or logging in a user.
+     - `.get` for session validation, logout, and fetching user profile.
+     */
     var method: HTTPMethods {
         switch self {
         case .login, .createUser:
@@ -25,6 +38,10 @@ extension AuthEndPoint: NetworkEndPoint {
         }
     }
     
+    /**
+     The path component of the endpoint URL.
+     Each case specifies its own endpoint path relative to the base URL.
+     */
     var path: String {
         switch self {
         case .login:
@@ -40,10 +57,19 @@ extension AuthEndPoint: NetworkEndPoint {
         }
     }
     
+    /**
+     The base URL for the API requests.
+     All endpoints use a common base URL, which is fetched from the `Constants` file.
+     */
     var baseURL: String {
         return Constants.API.baseUrl
     }
     
+    /**
+     The body of the HTTP request.
+     - For login and createUser endpoints, this includes the necessary data for the request in JSON format.
+     - Other endpoints do not have body.
+     */
     var body: (any Encodable)? {
         switch self {
         case .login(username: let username, password: let password):
@@ -55,6 +81,11 @@ extension AuthEndPoint: NetworkEndPoint {
         }
     }
     
+    /**
+     The headers for the HTTP request.
+     - Adds common headers for all requests.
+     - Adds a `user-token` header for endpoints that require authentication.
+     */
     var headers: [String : String]? {
         switch self {
         case .login, .createUser:
@@ -65,7 +96,10 @@ extension AuthEndPoint: NetworkEndPoint {
             return headers
         }
     }
-    
+    /**
+     Query parameters for the request.
+     The Authentication related endpoints not use query parameters, so returning nil.
+     */
     var queryItems: [URLQueryItem]? {
         return nil
     }

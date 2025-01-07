@@ -8,7 +8,9 @@
 import XCTest
 @testable import Devgram
 final class CreatePostViewModelTests: XCTestCase {
-
+    /**
+     This test verifies that creating a post succeeds when a valid data is provided.
+     */
     func testCreatePostShouldSuccess() async {
         let mockService = MockPostsService(mockPosts: nil)
         let viewModel = CreatePostViewModel(postsService: mockService)
@@ -21,7 +23,9 @@ final class CreatePostViewModelTests: XCTestCase {
         expectation.fulfill()
         await fulfillment(of: [expectation], timeout: 1)
     }
-    
+    /**
+     This test verifies that creating a post fails when an invalid user (with user ID 0) is provided.
+     */
     func testCreatePostShouldFail() async {
         let mockService = MockPostsService(mockPosts: nil)
         let viewModel = CreatePostViewModel(postsService: mockService)

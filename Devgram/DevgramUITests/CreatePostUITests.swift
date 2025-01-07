@@ -16,6 +16,11 @@ final class CreatePostUITests: XCTestCase {
     override func tearDownWithError() throws {
     }
     
+    /**
+    This test verifies that the post creation feature works correctly.
+    It logs in the user, navigates to the "Add Post" screen, creates a post, and ensures that the post appears successfully.
+    The test checks that the "Home" button is selected after posting and the post creation button is no longer visible.
+     */
     func testCreatePostShouldWork() throws {
         app.launch()
         try loginWithTestUser()
@@ -41,6 +46,10 @@ final class CreatePostUITests: XCTestCase {
         }
     }
     
+    /**
+    This helper method simulates logging in with a test user by entering the username and password.
+    It ensures that the login button is enabled and taps it to log in the user.
+     */
     func loginWithTestUser() throws{
         let testUsername = UITestConstants.TestUser.userName
         let testPassword = UITestConstants.TestUser.password
