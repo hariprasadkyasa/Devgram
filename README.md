@@ -36,6 +36,7 @@ With additional time, there is significant potential to implement more features 
 - Launch the app 
 - Signup by providing a unique email id and other details.
 - The app automatically logs in after successful signup
+- Alternatively, you can login with a demo account:- email: demo@test.com, password: demouser
 - The app displays posts that community has shared
 - Use Create Post option to share new post
 ---
