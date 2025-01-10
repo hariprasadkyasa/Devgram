@@ -117,18 +117,16 @@ With additional time, there is significant potential to implement more features 
 ### **User Profile**
 1. User selects the "Profile" tab to access `ProfileView`.
 2. When `ProfileView` is instantiated:
-   - It creates an instance of `ProfileViewModel` as a `@StateObject`.
-   - `ProfileViewModel` depends on `PostsService` and `UserSessionManager` and accepts them as dependencies.
+   - It accepts `PostsService` and `UserSessionManager` in the initializer as dependencies.
 3. When the view appears:
-   - `ProfileViewModel` fetches user profile data and the user's posts.
-   - `ProfileViewModel` uses:
+   - `ProfileView` uses:
      - `UserSessionManager` to get the current user profile (e.g., username and email).
      - `PostsService` to fetch all posts by the current user.
 4. The view displays:
    - User details in a `VStack`.
    - User posts in a `GridView` with pagination for incremental loading.
 5. When the user clicks "Logout":
-   - `ProfileViewModel` invalidates the user session using `UserSessionManager`.
+   - `ProfileView` calls a method on `UserSessionManager` that invalidates the user session.
    - This updates the app to navigate back to `LoginView`.
 
 ---
